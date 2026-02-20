@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест по электробезопасности | КТЖ</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background-color: #1e1e1e;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid #333;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: #bb86fc;
+            text-align: center;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #b0b0b0;
+            margin-bottom: 30px;
+            font-style: italic;
+            border-bottom: 1px solid #333;
+            padding-bottom: 15px;
+        }
+
+        .question-block {
+            background-color: #252525;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 5px solid #bb86fc;
+            transition: all 0.2s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .question-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #ffffff;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            background-color: #2d2d2d;
+            border-radius: 40px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background 0.2s, border 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .option:hover {
+            background-color: #3d3d3d;
+            border-color: #bb86fc;
+        }
+
+        .option input[type="radio"] {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #777;
+            border-radius: 50%;
+            margin-right: 15px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .option input[type="radio"]:checked {
+            border-color: #bb86fc;
+            background-color: #bb86fc;
+            box-shadow: inset 0 0 0 4px #2d2d2d;
+        }
+
+        .option input[type="radio"]:focus {
+            outline: none;
+        }
+
+        .option-text {
+            font-size: 1rem;
+            color: #ddd;
+            flex: 1;
+        }
+
+        /* Подсветка правильных/неправильных ответов после проверки */
+        .option.correct {
+            background-color: #1b5e20;
+            border-color: #00c853;
+        }
+
+        .option.correct .option-text {
+            color: #ffffff;
+            font-weight: 500;
+        }
+
+        .option.incorrect {
+            background-color: #b71c1c;
+            border-color: #ff5252;
+        }
+
+        .option.incorrect .option-text {
+            color: #ffffff;
+        }
+
+        .option.show-correct {
+            background-color: #1b5e20;
+            border-color: #00c853;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background-color: #2d2d2d;
+            color: #ffffff;
+            border: none;
+            padding: 14px 28px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.2s;
+            flex: 1 1 auto;
+            border: 1px solid #444;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background-color: #bb86fc;
+            color: #121212;
+            border-color: #bb86fc;
+        }
+
+        .btn-primary:hover {
+            background-color: #a370d0;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(187, 134, 252, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background-color: #3d3d3d;
+            border-color: #bb86fc;
+            transform: translateY(-2px);
+        }
+
+        .result {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 1.4rem;
+            font-weight: 600;
+            padding: 15px;
+            background-color: #252525;
+            border-radius: 50px;
+            color: #bb86fc;
+            border: 1px solid #333;
+        }
+
+        footer {
+            margin-top: 30px;
+            color: #666;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        /* Адаптация для мобильных */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+            .btn {
+                padding: 12px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⚡ Тест по электробезопасности ⚡</h1>
+        <div class="subtitle">Для электромонтёров связи КТЖ</div>
+
+        <div id="questionsContainer"></div>
+
+        <div class="button-group">
+            <button class="btn btn-primary" id="checkBtn">✅ Проверить ответы</button>
+            <button class="btn btn-secondary" id="resetBtn">🔄 Сбросить</button>
+        </div>
+
+        <div id="resultDisplay" class="result">—</div>
+        <footer>На основе билетов КТЖ • Правильные ответы подсветятся после проверки</footer>
+    </div>
+
+    <script>
+        (function() {
+            // Массив вопросов
+            const questions = [
+                {
+                    text: "1. Кто имеет право выдавать наряд или распоряжение в зависимости от состава бригады?",
+                    options: [
+                        { text: "Ответственный за электрохозяйство (или его заместитель)", correct: true },
+                        { text: "Главный инженер филиала", correct: false },
+                        { text: "Начальник участка связи", correct: false },
+                        { text: "Любой работник с группой III", correct: false }
+                    ]
+                },
+                {
+                    text: "2. Кто может замещать ответственного за электрохозяйство в филиале (в электроустановках до 1000 В)?",
+                    options: [
+                        { text: "Административно-технический персонал с группой IV по приказу", correct: true },
+                        { text: "Любой электротехнический персонал с группой III", correct: false },
+                        { text: "Оперативный персонал с группой V", correct: false },
+                        { text: "Работник по устному распоряжению руководителя", correct: false }
+                    ]
+                },
+                {
+                    text: "3. Как часто нужно проверять соответствие схем электроснабжения реальным условиям?",
+                    options: [
+                        { text: "Не реже 1 раза в 2 года", correct: true },
+                        { text: "Не реже 1 раза в год", correct: false },
+                        { text: "Не реже 1 раза в 5 лет", correct: false },
+                        { text: "Только при вводе в эксплуатацию", correct: false }
+                    ]
+                },
+                {
+                    text: "4. Как правильно проверить отсутствие напряжения на отключенном РЩ или выключателе?",
+                    options: [
+                        { text: "На всех выводах исправным указателем напряжения", correct: true },
+                        { text: "На одном выводе индикаторной отверткой", correct: false },
+                        { text: "Визуально по приборам учёта", correct: false },
+                        { text: "Только на вводном автомате", correct: false }
+                    ]
+                },
+                {
+                    text: "5. Какие основные требования к работникам, обслуживающим электроустановки?",
+                    options: [
+                        { text: "Возраст 18+, медосмотр, обучение от 72 ч, стажировка, проверка знаний", correct: true },
+                        { text: "Только наличие диплома о высшем образовании", correct: false },
+                        { text: "Возраст не моложе 21 года и разрешение врача", correct: false },
+                        { text: "Достаточно пройти инструктаж на рабочем месте", correct: false }
+                    ]
+                },
+                {
+                    text: "6. Что такое сопротивление заземляющего устройства и каковы его параметры?",
+                    options: [
+                        { text: "Отношение напряжения на заземлителе к току в землю; должно быть не выше нормы", correct: true },
+                        { text: "Сопротивление провода заземления; должно быть не менее 4 Ом", correct: false },
+                        { text: "Сопротивление изоляции кабеля; проверяется раз в год", correct: false },
+                        { text: "Напряжение прикосновения; должно быть не более 50 В", correct: false }
+                    ]
+                }
+            ];
+
+            const container = document.getElementById('questionsContainer');
+            const checkBtn = document.getElementById('checkBtn');
+            const resetBtn = document.getElementById('resetBtn');
+            const resultDisplay = document.getElementById('resultDisplay');
+
+            // Функция для рендера вопросов
+            function renderQuestions() {
+                let html = '';
+                questions.forEach((q, qIndex) => {
+                    html += `<div class="question-block" data-qindex="${qIndex}" id="q-${qIndex}">`;
+                    html += `<div class="question-title">${q.text}</div>`;
+                    html += `<div class="options">`;
+                    q.options.forEach((opt, optIndex) => {
+                        const optionId = `q${qIndex}_opt${optIndex}`;
+                        html += `
+                            <label class="option" for="${optionId}">
+                                <input type="radio" name="q${qIndex}" id="${optionId}" value="${optIndex}" data-correct="${opt.correct}">
+                                <span class="option-text">${opt.text}</span>
+                            </label>
+                        `;
+                    });
+                    html += `</div></div>`;
+                });
+                container.innerHTML = html;
+            }
+
+            // Сброс всех выборов и подсветок
+            function resetTest() {
+                // Сбросить radio
+                document.querySelectorAll('input[type="radio"]').forEach(radio => {
+                    radio.checked = false;
+                });
+                // Убрать классы подсветки у option
+                document.querySelectorAll('.option').forEach(opt => {
+                    opt.classList.remove('correct', 'incorrect', 'show-correct');
+                });
+                resultDisplay.textContent = '—';
+            }
+
+            // Проверка ответов
+            function checkAnswers() {
+                let correctCount = 0;
+                const total = questions.length;
+
+                // Сначала убираем предыдущие классы подсветки
+                document.querySelectorAll('.option').forEach(opt => {
+                    opt.classList.remove('correct', 'incorrect', 'show-correct');
+                });
+
+                // Перебираем вопросы
+                questions.forEach((q, qIndex) => {
+                    const questionBlock = document.getElementById(`q-${qIndex}`);
+                    const radioButtons = questionBlock.querySelectorAll('input[type="radio"]');
+                    let selectedValue = null;
+                    let selectedElement = null;
+
+                    // Находим выбранный radio
+                    radioButtons.forEach((radio, idx) => {
+                        if (radio.checked) {
+                            selectedValue = idx;
+                            selectedElement = radio.closest('.option');
+                        }
+                    });
+
+                    // Получаем правильный индекс (где correct = true)
+                    let correctIndex = q.options.findIndex(opt => opt.correct === true);
+
+                    // Подсветка правильного варианта (зеленым)
+                    const correctOption = questionBlock.querySelectorAll('.option')[correctIndex];
+                    if (correctOption) {
+                        correctOption.classList.add('show-correct'); // зеленый фон для правильного
+                    }
+
+                    // Если ничего не выбрано
+                    if (selectedValue === null) {
+                        // не засчитываем, но правильный уже подсвечен
+                        return;
+                    }
+
+                    // Если выбран правильный ответ
+                    if (selectedValue === correctIndex) {
+                        selectedElement.classList.add('correct');
+                        correctCount++;
+                    } else {
+                        // Выбран неправильный - подсветить его красным
+                        selectedElement.classList.add('incorrect');
+                    }
+                });
+
+                // Вывод результата
+                resultDisplay.textContent = `Правильных ответов: ${correctCount} из ${total}`;
+            }
+
+            // Инициализация
+            renderQuestions();
+
+            // События кнопок
+            checkBtn.addEventListener('click', checkAnswers);
+            resetBtn.addEventListener('click', resetTest);
+        })();
+    </script>
+</body>
+</html>
