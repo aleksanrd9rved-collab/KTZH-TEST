@@ -1,239 +1,841 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <title>ВЛС Тренажер</title>
-  
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>KTZH TEST | ВЛС</title>
 
-  <style>
-    body {
-  background: #0f172a;
-  color: white;
-  font-family: Arial;
-  text-align: center;
+<style>
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.container {
-  width: 90%;
-  max-width: 600px;
-  margin: auto;
-  margin-top: 40px;
+body {
+  margin: 0;
+  min-height: 100svh;
+  background:
+    radial-gradient(circle at top, #1e3a8a 0%, transparent 35%),
+    linear-gradient(180deg, #020617 0%, #0f172a 100%);
+  color: #e5e7eb;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  padding: env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
 }
 
-button {
-  padding: 10px 20px;
-  margin-top: 15px;
-  background: #2563eb;
+.app {
+  width: 100%;
+  max-width: 430px;
+  min-height: 100svh;
+  margin: 0 auto;
+  padding: 18px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.logo {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.logo-title {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+.logo-subtitle {
+  font-size: 13px;
+  color: #94a3b8;
+}
+
+.badge {
+  padding: 8px 11px;
+  border-radius: 999px;
+  background: rgba(37, 99, 235, 0.18);
+  border: 1px solid rgba(96, 165, 250, 0.35);
+  color: #bfdbfe;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.card {
+  background: rgba(15, 23, 42, 0.86);
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(14px);
+  border-radius: 24px;
+  padding: 18px;
+}
+
+.start-card {
+  margin-top: 26px;
+}
+
+.start-title {
+  font-size: 27px;
+  line-height: 1.12;
+  font-weight: 900;
+  margin: 0 0 12px;
+}
+
+.start-text {
+  color: #cbd5e1;
+  line-height: 1.5;
+  font-size: 15px;
+  margin: 0 0 18px;
+}
+
+.features {
+  display: grid;
+  gap: 10px;
+  margin: 18px 0;
+}
+
+.feature {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(30, 41, 59, 0.72);
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  padding: 12px;
+  border-radius: 16px;
+  font-size: 14px;
+  color: #dbeafe;
+}
+
+.btn {
+  width: 100%;
   border: none;
+  border-radius: 18px;
+  padding: 15px 16px;
+  font-size: 16px;
+  font-weight: 800;
   color: white;
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  box-shadow: 0 14px 30px rgba(37, 99, 235, 0.35);
   cursor: pointer;
-  border-radius: 8px;
 }
 
-button:hover {
-  background: #1d4ed8;
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn.secondary {
+  background: rgba(30, 41, 59, 0.95);
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  box-shadow: none;
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
 }
 
 .hidden {
-  display: none;
+  display: none !important;
+}
+
+.top-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  gap: 10px;
+}
+
+.counter {
+  font-size: 13px;
+  color: #cbd5e1;
+  font-weight: 700;
+}
+
+.score-mini {
+  font-size: 13px;
+  color: #86efac;
+  font-weight: 800;
+}
+
+.progress-wrap {
+  height: 9px;
+  width: 100%;
+  background: rgba(30, 41, 59, 0.95);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: 16px;
+  border: 1px solid rgba(148, 163, 184, 0.12);
+}
+
+.progress {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #22c55e, #3b82f6, #a855f7);
+  border-radius: 999px;
+  transition: width 0.35s ease;
+}
+
+.question-card {
+  margin-bottom: 14px;
+}
+
+.question-topic {
+  display: inline-flex;
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: rgba(14, 165, 233, 0.12);
+  color: #7dd3fc;
+  border: 1px solid rgba(125, 211, 252, 0.2);
+  font-size: 12px;
+  font-weight: 800;
+  margin-bottom: 13px;
+}
+
+.question {
+  font-size: 20px;
+  line-height: 1.35;
+  font-weight: 850;
+}
+
+.answers {
+  display: grid;
+  gap: 11px;
 }
 
 .answer {
-  display: block;
-  margin: 10px;
-  padding: 10px;
-  background: #1e293b;
-  border-radius: 8px;
+  width: 100%;
+  text-align: left;
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  background: rgba(30, 41, 59, 0.88);
+  color: #e5e7eb;
+  border-radius: 18px;
+  padding: 14px;
+  font-size: 15px;
+  line-height: 1.35;
+  display: flex;
+  gap: 11px;
+  align-items: flex-start;
   cursor: pointer;
+  transition: 0.18s ease;
 }
 
-.answer:hover {
-  background: #334155;
+.answer:active {
+  transform: scale(0.985);
 }
-  </head>
-  </style>
+
+.letter {
+  min-width: 30px;
+  height: 30px;
+  border-radius: 11px;
+  display: grid;
+  place-items: center;
+  background: rgba(15, 23, 42, 0.9);
+  color: #93c5fd;
+  font-weight: 900;
+  border: 1px solid rgba(147, 197, 253, 0.22);
+}
+
+.answer.correct {
+  background: rgba(22, 163, 74, 0.22);
+  border-color: rgba(74, 222, 128, 0.9);
+}
+
+.answer.correct .letter {
+  background: #16a34a;
+  color: white;
+}
+
+.answer.wrong {
+  background: rgba(220, 38, 38, 0.22);
+  border-color: rgba(248, 113, 113, 0.9);
+}
+
+.answer.wrong .letter {
+  background: #dc2626;
+  color: white;
+}
+
+.feedback {
+  margin-top: 14px;
+  padding: 13px;
+  border-radius: 17px;
+  font-size: 14px;
+  line-height: 1.45;
+  border: 1px solid rgba(148, 163, 184, 0.14);
+}
+
+.feedback.good {
+  background: rgba(22, 163, 74, 0.16);
+  color: #bbf7d0;
+}
+
+.feedback.bad {
+  background: rgba(220, 38, 38, 0.15);
+  color: #fecaca;
+}
+
+.result-title {
+  font-size: 27px;
+  font-weight: 900;
+  margin: 0 0 6px;
+}
+
+.result-subtitle {
+  color: #cbd5e1;
+  margin: 0 0 16px;
+  line-height: 1.45;
+}
+
+.chart-box {
+  display: grid;
+  place-items: center;
+  margin: 10px 0 18px;
+}
+
+#chart {
+  width: 230px;
+  height: 230px;
+}
+
+.result-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.stat {
+  border-radius: 18px;
+  background: rgba(30, 41, 59, 0.76);
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  padding: 14px;
+}
+
+.stat-num {
+  font-size: 25px;
+  font-weight: 950;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: #94a3b8;
+  margin-top: 4px;
+}
+
+.mistakes-title {
+  font-size: 18px;
+  font-weight: 900;
+  margin: 18px 0 10px;
+}
+
+.mistake {
+  background: rgba(30, 41, 59, 0.72);
+  border: 1px solid rgba(248, 113, 113, 0.28);
+  border-radius: 18px;
+  padding: 13px;
+  margin-bottom: 10px;
+}
+
+.mistake-q {
+  font-size: 14px;
+  font-weight: 850;
+  margin-bottom: 8px;
+  line-height: 1.35;
+}
+
+.mistake-line {
+  font-size: 13px;
+  color: #cbd5e1;
+  line-height: 1.45;
+}
+
+.red {
+  color: #fca5a5;
+  font-weight: 800;
+}
+
+.green {
+  color: #86efac;
+  font-weight: 800;
+}
+
+.empty {
+  color: #bbf7d0;
+  background: rgba(22, 163, 74, 0.16);
+  border: 1px solid rgba(74, 222, 128, 0.35);
+  padding: 14px;
+  border-radius: 18px;
+  font-size: 15px;
+}
+
+.footer-buttons {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+@media (max-width: 390px) {
+  .app {
+    padding: 14px;
+  }
+
+  .question {
+    font-size: 18px;
+  }
+
+  .start-title {
+    font-size: 24px;
+  }
+}
+</style>
+</head>
+
 <body>
 
-<div class="container">
-  <h1>📡 ВЛС Тренажёр</h1>
+<div class="app">
 
-  <div id="start">
-    <button onclick="startTest()">Начать тест</button>
+  <div class="header">
+    <div class="logo">
+      <div class="logo-title">KTZH TEST</div>
+      <div class="logo-subtitle">Тренажёр по ВЛС</div>
+    </div>
+    <div class="badge">iPhone</div>
   </div>
 
-  <div id="test" class="hidden">
-    <div id="timer">⏱ 0</div>
-    <div id="question"></div>
-    <div id="answers"></div>
+  <section id="startScreen" class="card start-card">
+    <h1 class="start-title">📡 Воздушно-кабельные линии связи</h1>
+    <p class="start-text">
+      Мобильный тренажёр: выбираешь ответ, сразу видишь правильный вариант.
+      В конце будет график и список вопросов, где были ошибки.
+    </p>
 
-    <button onclick="nextQuestion()">Далее</button>
-  </div>
+    <div class="features">
+      <div class="feature">🌙 Тёмный дизайн под телефон</div>
+      <div class="feature">✅ Правильный ответ подсвечивается зелёным</div>
+      <div class="feature">❌ Ошибка подсвечивается красным</div>
+      <div class="feature">📊 График результата в конце</div>
+    </div>
 
-  <div id="result" class="hidden">
-    <h2>Результат</h2>
-    <p id="score"></p>
-    <button onclick="restart()">Заново</button>
-  </div>
+    <button class="btn" onclick="startQuiz()">Начать тест</button>
+  </section>
+
+  <section id="quizScreen" class="hidden">
+    <div class="top-line">
+      <div class="counter" id="counter">Вопрос 1 / 30</div>
+      <div class="score-mini" id="miniScore">Верно: 0</div>
+    </div>
+
+    <div class="progress-wrap">
+      <div class="progress" id="progress"></div>
+    </div>
+
+    <div class="card question-card">
+      <div class="question-topic">ВЛС / Кабельные линии</div>
+      <div class="question" id="questionText"></div>
+      <div id="feedback" class="feedback hidden"></div>
+    </div>
+
+    <div class="answers" id="answersBox"></div>
+
+    <button class="btn" id="nextBtn" onclick="nextQuestion()" disabled>Далее</button>
+  </section>
+
+  <section id="resultScreen" class="card hidden">
+    <h2 class="result-title">Результат</h2>
+    <p class="result-subtitle" id="resultText"></p>
+
+    <div class="chart-box">
+      <canvas id="chart" width="230" height="230"></canvas>
+    </div>
+
+    <div class="result-stats">
+      <div class="stat">
+        <div class="stat-num green" id="rightCount">0</div>
+        <div class="stat-label">Правильно</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num red" id="wrongCount">0</div>
+        <div class="stat-label">Ошибки</div>
+      </div>
+    </div>
+
+    <div class="mistakes-title">Ошибки</div>
+    <div id="mistakesBox"></div>
+
+    <div class="footer-buttons">
+      <button class="btn" onclick="restartQuiz()">Пройти заново</button>
+    </div>
+  </section>
+
 </div>
 
-<script>let questions = [
+<script>
+const letters = ["А", "Б", "В", "Г"];
+
+const questions = [
   {
-    q: "Рабочий частотный диапазон ВЛС?",
-    a: ["10^0–10^9 Гц", "10^0–10^5 Гц", "10^0–10^6 Гц", "10^11–10^15 Гц"],
-    correct: 0
+    q: "Выберите рабочий частотный диапазон воздушных линий связи.",
+    a: ["10⁰–10⁹ Гц", "10⁰–10⁵ Гц", "10⁰–10⁶ Гц", "10¹¹–10¹⁵ Гц"],
+    c: 0
   },
   {
-    q: "Как меняется волновое сопротивление?",
-    a: [
-      "уменьшается",
-      "не зависит",
-      "увеличивается затем стабилизируется",
-      "зависит от кабеля"
-    ],
-    correct: 2
+    q: "Как изменяется волновое сопротивление цепи в зависимости от частоты?",
+    a: ["С ростом частоты уменьшается, затем стабилизируется", "Не зависит от частоты", "С ростом частоты увеличивается, затем стабилизируется", "Зависит только от типа кабеля"],
+    c: 0
   },
   {
-    q: "Типы направляющих систем?",
-    a: [
-      "все верны",
-      "воздушные кабельные",
-      "спутниковые",
-      "радиорелейные кабельные оптические"
-    ],
-    correct: 3
+    q: "Назовите три основных типа направляющих систем электросвязи.",
+    a: ["Все три варианта верны", "Воздушные и кабельные", "Спутниковые, воздушные, кабельные", "Радиорелейные, кабельные, волоконно-оптические"],
+    c: 3
   },
   {
-    q: "Уход за оптическими разъемами?",
-    a: [
-      "руками",
-      "спиртом",
-      "сжатый воздух + изопропил",
-      "не нужен"
-    ],
-    correct: 2
+    q: "Как осуществляется уход за оптическими разъёмами?",
+    a: ["Протирание руками в резиновых перчатках", "Протирание спиртом при необходимости", "Обдув сжатым воздухом и протирание безворсовой тканью с изопропиловым спиртом", "Оптические разъёмы не требуют ухода"],
+    c: 2
   },
   {
-    q: "Виды скрутки?",
-    a: ["пучковая повивная", "оптические", "металлические", "магистральные"],
-    correct: 0
+    q: "По виду скрутки изолированных проводников современные кабели бывают:",
+    a: ["Пучковые, повивные", "Электрические, оптические", "Металлические, пластмассовые, металлопластмассовые", "Магистральные, зоновые, городские, сельские"],
+    c: 0
   },
   {
-    q: "Переходное затухание?",
-    a: [
-      "увеличивается",
-      "уменьшается",
-      "уменьшается потом стаб",
-      "не меняется"
-    ],
-    correct: 0
+    q: "Как изменяется переходное затухание на ближнем конце симметричной цепи с изменением частоты сигнала?",
+    a: ["Монотонно увеличивается", "Сначала уменьшается, потом стабилизируется", "Монотонно уменьшается", "Не изменяется"],
+    c: 2
   },
   {
-    q: "Защита от молнии?",
-    a: [
-      "увеличение коэффициента",
-      "заземление",
-      "изоляция",
-      "район"
-    ],
-    correct: 1
+    q: "Каким образом можно снизить величину опасных влияний молнии на направляющие системы электросвязи?",
+    a: ["За счёт увеличения коэффициента защитного действия кабеля связи", "За счёт заземления металлических оболочек кабелей связи", "За счёт изоляции металлических оболочек кабелей связи от земли", "За счёт выбора района эксплуатации"],
+    c: 1
   },
   {
-    q: "Классификация кабелей?",
-    a: [
-      "подземные",
-      "симметричные коаксиальные",
-      "симметричные коаксиальные обмоточные",
-      "подводные"
-    ],
-    correct: 2
+    q: "Как классифицируются электрические кабели по конструкции?",
+    a: ["Подземные, воздушные", "Симметричные, коаксиальные, обмоточные, волноводные", "Симметричные, коаксиальные", "Симметричные, коаксиальные, подводные"],
+    c: 1
   },
   {
-    q: "Взаимные влияния?",
-    a: [
-      "активные",
-      "регулярные",
-      "непосредственные косвенные",
-      "косвенные"
-    ],
-    correct: 2
+    q: "Как классифицируются взаимные электромагнитные влияния между цепями?",
+    a: ["Активные, реактивные", "Регулярные, нерегулярные, систематические, несистематические", "Непосредственные, косвенные", "Только косвенные"],
+    c: 2
   },
   {
-    q: "Рабочее затухание?",
-    a: [
-      "согласованные",
-      "разомкнутые",
-      "любые",
-      "КЗ"
-    ],
-    correct: 0
+    q: "При каких нагрузках определяется рабочее затухание линии?",
+    a: ["При согласованных", "При разомкнутых концах линии", "При любых нагрузках", "При коротком замыкании на конце линии"],
+    c: 0
+  },
+  {
+    q: "Как изменяются первичные параметры передачи симметричной цепи с увеличением расстояния между проводниками?",
+    a: ["Активное сопротивление, ёмкость и проводимость изоляции уменьшаются, ёмкость увеличивается", "Активное сопротивление, ёмкость и проводимость изоляции увеличиваются", "Ёмкость и проводимость изоляции уменьшаются, индуктивность увеличивается", "Индуктивность уменьшается"],
+    c: 2
+  },
+  {
+    q: "Какой режим передачи соответствует частотному диапазону волоконно-оптических направляющих систем электросвязи?",
+    a: ["Электродинамический", "Волновой", "Квазистационарный", "Дискретный"],
+    c: 1
+  },
+  {
+    q: "Какие источники внешних электромагнитных влияний являются мешающими?",
+    a: ["Создающие в линии связи напряжение 1–2 В", "Создающие в линии связи напряжение 10–12 В", "Создающие в линии связи напряжение 1–2 мВ", "Создающие напряжение выше 15 В"],
+    c: 2
+  },
+  {
+    q: "Какие существуют способы скрутки жил в группы?",
+    a: ["Парная, звёздная, двойная парная, двойная звёздная", "Парная, тройная, звёздная", "Парная, звёздная, двойная парная, двойная звёздная, тройная парная", "Пучковая, повивная"],
+    c: 0
+  },
+  {
+    q: "Укажите основные виды коррозии в направляющих системах электросвязи.",
+    a: ["Гальваническая, электрохимическая, коррозия блуждающими токами", "Гальваническая, электрохимическая, почвенная", "Коррозия в почве с известковыми породами", "Межкристаллитная, электрохимическая, коррозия блуждающими токами"],
+    c: 0
+  },
+  {
+    q: "Какие существуют виды внешних электромагнитных влияний линий?",
+    a: ["Электрические, магнитные, гальванические", "Высоковольтные, низковольтные", "Воздушные, подземные", "Грозы, молнии"],
+    c: 0
+  },
+  {
+    q: "Оборудование воздушных линий СЦБ:",
+    a: ["Трансформаторы типа ОМ", "Трёхполюсные разъединители", "Автоматические выключатели АВМ", "Все ответы верны"],
+    c: 3
+  },
+  {
+    q: "Каковы достоинства оптических волоконных кабелей?",
+    a: ["Низкая стоимость", "Полное экранирование электромагнитного поля", "Низкий уровень тепловых шумов", "Малое активное сопротивление цепей"],
+    c: 1
+  },
+  {
+    q: "Какие параметры обычно вносят в паспорт одномодового оптического волокна?",
+    a: ["Толщину защитных покрытий и степень очистки волокна от примесей", "Коэффициент затухания и коэффициент хроматической дисперсии", "Величину легирующих добавок в волокне", "Год выпуска и год ввода"],
+    c: 1
+  },
+  {
+    q: "Чем обусловлена волноводная составляющая хроматической дисперсии?",
+    a: ["Спектральной зависимостью групповой скорости распространения моды", "Зависимостью показателя преломления среды от температуры", "Зависимостью показателя преломления среды от частоты", "Зависимостью показателя преломления среды от длины волны"],
+    c: 0
+  },
+  {
+    q: "Какие характеристики оптического волокна называют эксплуатационными?",
+    a: ["Стойкость оптических волокон к воздействию влаги", "Надёжность и стойкость ОВ к воздействиям внешней среды", "Долговременная механическая прочность и исходная инертная прочность", "Способ обслуживания"],
+    c: 1
+  },
+  {
+    q: "Какие причины возникновения межмодовой дисперсии?",
+    a: ["Большое число мод распространяется с разной скоростью", "Скорость распространения мод зависит от диаметра сердцевины", "Скорость распространения мод зависит от длины волны", "Зависит только от параметров кабеля"],
+    c: 0
+  },
+  {
+    q: "Каков стандартный диаметр сердцевины многомодовых волокон?",
+    a: ["10 или 20 мкм", "50 или 62,5 мкм", "80 или 90 мкм", "100–120 мкм"],
+    c: 1
+  },
+  {
+    q: "Назовите границы оптического диапазона волн, используемого для передачи световых сигналов по оптическим кабелям.",
+    a: ["0,3–14 мкм", "0,1–26 мкм", "0,8–1,6 мкм", "19–21 мкм"],
+    c: 2
+  },
+  {
+    q: "Каковы преимущества ОК с бронепокровами из стальной проволоки по сравнению с ОК на основе диэлектрических силовых элементов?",
+    a: ["Верны оба предыдущих ответа", "Более высокая стойкость к растягивающим и раздавливающим усилиям, меньшие габариты и стоимость, проще трассопоиск", "Лучшая защита от электромагнитных воздействий", "Только экономичность"],
+    c: 1
+  },
+  {
+    q: "Какими параметрами оценивают хроматическую дисперсию одномодовых оптических волокон?",
+    a: ["Коэффициентом хроматической дисперсии D, пс/(нм·км)", "Коэффициентом Бриллюэновского рассеяния", "Коэффициентом Рэлеевского рассеяния", "Коэффициентом широкополосности, МГц·км"],
+    c: 0
+  },
+  {
+    q: "Как классифицируются оптические кабели по условиям эксплуатации?",
+    a: ["Связи, радиофикации, контрольные", "Линейные, внутриобъектовые", "Воздушной подвески, подземные, подводные", "Многомодовые, одномодовые"],
+    c: 2
+  },
+  {
+    q: "Какую конструкцию могут иметь радиочастотные кабели?",
+    a: ["Коаксиальную, симметрическую", "Коаксиальную, симметричную, оптическую", "Коаксиальную, симметричную, спиральную", "Несимметричную, радиальную"],
+    c: 2
+  },
+  {
+    q: "Назовите недостатки радиорелейной линии связи.",
+    a: ["Сложности при эксплуатации", "Сложность аппаратуры передатчика и приёмника, узкополосность систем передачи", "Высокая стоимость и сложность оконечных устройств", "Зависимость качества связи от среды передачи и сторонних электромагнитных полей"],
+    c: 3
+  },
+  {
+    q: "Типовые профили опор:",
+    a: ["Крюковые, траверсные, смешанные", "Деревянные, железобетонные", "Пластмассовые", "Асбестовые"],
+    c: 0
   }
 ];
 
-let current = 0;
+let currentIndex = 0;
 let score = 0;
-let timer = 0;
-let interval;
+let answered = false;
+let mistakes = [];
 
-function startTest() {
-  document.getElementById("start").classList.add("hidden");
-  document.getElementById("test").classList.remove("hidden");
+const startScreen = document.getElementById("startScreen");
+const quizScreen = document.getElementById("quizScreen");
+const resultScreen = document.getElementById("resultScreen");
+const questionText = document.getElementById("questionText");
+const answersBox = document.getElementById("answersBox");
+const counter = document.getElementById("counter");
+const miniScore = document.getElementById("miniScore");
+const progress = document.getElementById("progress");
+const nextBtn = document.getElementById("nextBtn");
+const feedback = document.getElementById("feedback");
 
-  interval = setInterval(() => {
-    timer++;
-    document.getElementById("timer").innerText = "⏱ " + timer;
-  }, 1000);
-
-  showQuestion();
+function startQuiz() {
+  startScreen.classList.add("hidden");
+  quizScreen.classList.remove("hidden");
+  renderQuestion();
 }
 
-function showQuestion() {
-  let q = questions[current];
-  document.getElementById("question").innerText = q.q;
+function renderQuestion() {
+  answered = false;
+  nextBtn.disabled = true;
+  feedback.className = "feedback hidden";
+  feedback.innerHTML = "";
 
-  let answersHTML = "";
-  q.a.forEach((ans, i) => {
-    answersHTML += `<div class="answer" onclick="select(${i})">${ans}</div>`;
+  const q = questions[currentIndex];
+
+  counter.textContent = "Вопрос " + (currentIndex + 1) + " / " + questions.length;
+  miniScore.textContent = "Верно: " + score;
+  progress.style.width = ((currentIndex) / questions.length * 100) + "%";
+  questionText.textContent = q.q;
+
+  answersBox.innerHTML = "";
+
+  q.a.forEach((answer, index) => {
+    const btn = document.createElement("button");
+    btn.className = "answer";
+    btn.innerHTML = `
+      <span class="letter">${letters[index]}</span>
+      <span>${answer}</span>
+    `;
+    btn.onclick = () => selectAnswer(index);
+    answersBox.appendChild(btn);
+  });
+}
+
+function selectAnswer(selectedIndex) {
+  if (answered) return;
+
+  answered = true;
+  nextBtn.disabled = false;
+
+  const q = questions[currentIndex];
+  const answerButtons = document.querySelectorAll(".answer");
+
+  answerButtons.forEach((btn, index) => {
+    btn.disabled = true;
+
+    if (index === q.c) {
+      btn.classList.add("correct");
+    }
+
+    if (index === selectedIndex && selectedIndex !== q.c) {
+      btn.classList.add("wrong");
+    }
   });
 
-  document.getElementById("answers").innerHTML = answersHTML;
-}
+  if (selectedIndex === q.c) {
+    score++;
+    feedback.className = "feedback good";
+    feedback.innerHTML = "✅ Верно! Отлично.";
+  } else {
+    mistakes.push({
+      number: currentIndex + 1,
+      question: q.q,
+      yourAnswer: q.a[selectedIndex],
+      correctAnswer: q.a[q.c],
+      yourLetter: letters[selectedIndex],
+      correctLetter: letters[q.c]
+    });
 
-let selected = null;
+    feedback.className = "feedback bad";
+    feedback.innerHTML =
+      "❌ Неверно. Правильный ответ: <b>" +
+      letters[q.c] + ") " + q.a[q.c] + "</b>";
+  }
 
-function select(i) {
-  selected = i;
+  miniScore.textContent = "Верно: " + score;
 }
 
 function nextQuestion() {
-  if (selected === null) return;
+  if (!answered) return;
 
-  if (selected === questions[current].correct) {
-    score++;
-  }
+  currentIndex++;
 
-  selected = null;
-  current++;
-
-  if (current >= questions.length) {
-    finish();
+  if (currentIndex >= questions.length) {
+    finishQuiz();
   } else {
-    showQuestion();
+    renderQuestion();
   }
 }
 
-function finish() {
-  clearInterval(interval);
+function finishQuiz() {
+  quizScreen.classList.add("hidden");
+  resultScreen.classList.remove("hidden");
 
-  document.getElementById("test").classList.add("hidden");
-  document.getElementById("result").classList.remove("hidden");
+  progress.style.width = "100%";
 
-  document.getElementById("score").innerText =
-    "Правильно: " + score + " из " + questions.length +
-    " | Время: " + timer + " сек";
+  const wrong = questions.length - score;
+  const percent = Math.round((score / questions.length) * 100);
+
+  document.getElementById("resultText").textContent =
+    "Ты набрал " + score + " из " + questions.length + " — это " + percent + "%.";
+
+  document.getElementById("rightCount").textContent = score;
+  document.getElementById("wrongCount").textContent = wrong;
+
+  drawChart(score, wrong);
+  renderMistakes();
 }
 
-function restart() {
-  location.reload();
-}</script>
+function drawChart(right, wrong) {
+  const canvas = document.getElementById("chart");
+  const ctx = canvas.getContext("2d");
+
+  const total = right + wrong;
+  const centerX = canvas.width / 2;
+  const centerY = canvas.height / 2;
+  const radius = 92;
+  const lineWidth = 28;
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  ctx.lineWidth = lineWidth;
+  ctx.lineCap = "round";
+
+  ctx.beginPath();
+  ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+  ctx.strokeStyle = "rgba(30, 41, 59, 0.95)";
+  ctx.stroke();
+
+  const rightAngle = total === 0 ? 0 : (right / total) * Math.PI * 2;
+
+  ctx.beginPath();
+  ctx.arc(centerX, centerY, radius, -Math.PI / 2, -Math.PI / 2 + rightAngle);
+  ctx.strokeStyle = "#22c55e";
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.arc(centerX, centerY, radius, -Math.PI / 2 + rightAngle, Math.PI * 1.5);
+  ctx.strokeStyle = "#ef4444";
+  ctx.stroke();
+
+  ctx.fillStyle = "#e5e7eb";
+  ctx.font = "900 34px -apple-system, BlinkMacSystemFont, Segoe UI, Arial";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+
+  const percent = Math.round((right / total) * 100);
+  ctx.fillText(percent + "%", centerX, centerY - 8);
+
+  ctx.fillStyle = "#94a3b8";
+  ctx.font = "700 13px -apple-system, BlinkMacSystemFont, Segoe UI, Arial";
+  ctx.fillText("результат", centerX, centerY + 24);
+}
+
+function renderMistakes() {
+  const box = document.getElementById("mistakesBox");
+
+  if (mistakes.length === 0) {
+    box.innerHTML = `<div class="empty">🔥 Красавчик! Ошибок нет.</div>`;
+    return;
+  }
+
+  box.innerHTML = "";
+
+  mistakes.forEach(item => {
+    const div = document.createElement("div");
+    div.className = "mistake";
+    div.innerHTML = `
+      <div class="mistake-q">№${item.number}. ${item.question}</div>
+      <div class="mistake-line">
+        Твой ответ: <span class="red">${item.yourLetter}) ${item.yourAnswer}</span>
+      </div>
+      <div class="mistake-line">
+        Правильно: <span class="green">${item.correctLetter}) ${item.correctAnswer}</span>
+      </div>
+    `;
+    box.appendChild(div);
+  });
+}
+
+function restartQuiz() {
+  currentIndex = 0;
+  score = 0;
+  answered = false;
+  mistakes = [];
+
+  resultScreen.classList.add("hidden");
+  quizScreen.classList.remove("hidden");
+
+  renderQuestion();
+}
+</script>
+
 </body>
 </html>
