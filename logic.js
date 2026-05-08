@@ -20,7 +20,8 @@ const testNames = {
   vls: "ВЛС",
   biot: "Охрана труда",
   pte: "ПТЭ",
-  mistakes: "Повтор ошибок"
+  mistakes: "Повтор ошибок",
+  zhts: "ЖТС"
 };
 
 const startScreen = document.getElementById("startScreen");
@@ -51,10 +52,12 @@ function updateCounts() {
   const vls = typeof vlsQuestions !== "undefined" && Array.isArray(vlsQuestions) ? vlsQuestions.length : 0;
   const biot = typeof biotQuestions !== "undefined" && Array.isArray(biotQuestions) ? biotQuestions.length : 0;
   const pte = typeof pteQuestions !== "undefined" && Array.isArray(pteQuestions) ? pteQuestions.length : 0;
+  const zhts = typeof zhtsQuestions !== "undefined" &&Array.isArray(zhtsQuestions)? zhtsQuestions.length : 0;
 
   document.getElementById("vlsCount").textContent = vls + " вопросов";
   document.getElementById("biotCount").textContent = biot + " вопросов";
   document.getElementById("pteCount").textContent = pte + " вопросов";
+  document.getElementById("zhtsCount").textContent =zhts + " вопросов";
 }
 
 function setMode(selectedMode) {
@@ -80,6 +83,9 @@ function chooseTest(type) {
   if (type === "pte") {
     questions = copyQuestions(pteQuestions);
   }
+
+  if (type === "zhts")
+  questions = copyQuestions(zhtsQuestions);
 
   if (!questions || questions.length === 0) {
     alert("В этом разделе нет вопросов. Проверь файл script.js и название массива.");
