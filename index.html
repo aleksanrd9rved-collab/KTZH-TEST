@@ -1,491 +1,578 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>KTZH TEST | Тренажёр</title>
- 
-<style>
-* {
- box-sizing: border-box;
- -webkit-tap-highlight-color: transparent;
-}
- 
-body {
- margin: 0;
- min-height: 100vh;
- min-height: 100svh;
- background:
-   radial-gradient(circle at top left, rgba(37, 99, 235, 0.45) 0%, transparent 32%),
-   radial-gradient(circle at top right, rgba(249, 115, 22, 0.22) 0%, transparent 28%),
-   linear-gradient(180deg, #020617 0%, #0f172a 100%);
- color: #e5e7eb;
- font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
- padding: env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
-}
- 
-.app {
- width: 100%;
- max-width: 430px;
- min-height: 100vh;
- min-height: 100svh;
- margin: 0 auto;
- padding: 18px;
-}
- 
-.header {
- display: flex;
- justify-content: space-between;
- align-items: center;
- gap: 12px;
- margin-bottom: 16px;
-}
- 
-.logo-title {
- font-size: 23px;
- font-weight: 900;
- letter-spacing: 0.5px;
-}
- 
-.logo-subtitle {
- font-size: 13px;
- color: #94a3b8;
- margin-top: 3px;
-}
- 
-.badge {
- padding: 8px 11px;
- border-radius: 999px;
- background: rgba(37, 99, 235, 0.18);
- border: 1px solid rgba(96, 165, 250, 0.35);
- color: #bfdbfe;
- font-size: 13px;
- font-weight: 800;
- white-space: nowrap;
-}
- 
-.card {
- background: rgba(15, 23, 42, 0.88);
- border: 1px solid rgba(148, 163, 184, 0.16);
- box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
- backdrop-filter: blur(14px);
- border-radius: 24px;
- padding: 18px;
-}
- 
-.start-card {
- margin-top: 22px;
-}
- 
-.start-title {
- font-size: 28px;
- line-height: 1.12;
- font-weight: 950;
- margin: 0 0 12px;
-}
- 
-.start-text {
- color: #cbd5e1;
- line-height: 1.5;
- font-size: 15px;
- margin: 0 0 18px;
-}
- 
-.menu-buttons {
- display: grid;
- gap: 12px;
- margin-top: 18px;
-}
- 
-.feature-list {
- display: grid;
- gap: 10px;
- margin: 18px 0;
-}
- 
-.feature {
- display: flex;
- align-items: center;
- gap: 10px;
- background: rgba(30, 41, 59, 0.72);
- border: 1px solid rgba(148, 163, 184, 0.12);
- padding: 12px;
- border-radius: 16px;
- font-size: 14px;
- color: #dbeafe;
-}
- 
-.btn {
- width: 100%;
- border: none;
- border-radius: 18px;
- padding: 15px 16px;
- font-size: 16px;
- font-weight: 850;
- color: white;
- background: linear-gradient(135deg, #2563eb, #7c3aed);
- box-shadow: 0 14px 30px rgba(37, 99, 235, 0.35);
- cursor: pointer;
-}
- 
-.btn.safety {
- background: linear-gradient(135deg, #f97316, #dc2626);
- box-shadow: 0 14px 30px rgba(249, 115, 22, 0.35);
-}
- 
-.btn.secondary {
- background: rgba(30, 41, 59, 0.95);
- border: 1px solid rgba(148, 163, 184, 0.18);
- box-shadow: none;
-}
- 
-.btn:active {
- transform: scale(0.98);
-}
- 
-.btn:disabled {
- opacity: 0.45;
- cursor: not-allowed;
-}
- 
-.hidden {
- display: none !important;
-}
- 
-.top-line {
- display: flex;
- justify-content: space-between;
- align-items: center;
- margin-bottom: 14px;
- gap: 10px;
-}
- 
-.counter {
- font-size: 13px;
- color: #cbd5e1;
- font-weight: 800;
-}
- 
-.score-mini {
- font-size: 13px;
- color: #86efac;
- font-weight: 900;
-}
- 
-.progress-wrap {
- height: 9px;
- width: 100%;
- background: rgba(30, 41, 59, 0.95);
- border-radius: 999px;
- overflow: hidden;
- margin-bottom: 16px;
- border: 1px solid rgba(148, 163, 184, 0.12);
-}
- 
-.progress {
- height: 100%;
- width: 0%;
- background: linear-gradient(90deg, #22c55e, #3b82f6, #a855f7);
- border-radius: 999px;
- transition: width 0.35s ease;
-}
- 
-.question-card {
- margin-bottom: 14px;
-}
- 
-.question-topic {
- display: inline-flex;
- padding: 7px 10px;
- border-radius: 999px;
- background: rgba(14, 165, 233, 0.12);
- color: #7dd3fc;
- border: 1px solid rgba(125, 211, 252, 0.2);
- font-size: 12px;
- font-weight: 900;
- margin-bottom: 13px;
-}
- 
-.question {
- font-size: 20px;
- line-height: 1.35;
- font-weight: 900;
-}
- 
-.answers {
- display: grid;
- gap: 11px;
-}
- 
-.answer {
- width: 100%;
- text-align: left;
- border: 1px solid rgba(148, 163, 184, 0.16);
- background: rgba(30, 41, 59, 0.88);
- color: #e5e7eb;
- border-radius: 18px;
- padding: 14px;
- font-size: 15px;
- line-height: 1.35;
- display: flex;
- gap: 11px;
- align-items: flex-start;
- cursor: pointer;
- transition: 0.18s ease;
-}
- 
-.answer:active {
- transform: scale(0.985);
-}
- 
-.letter {
- min-width: 30px;
- height: 30px;
- border-radius: 11px;
- display: grid;
- place-items: center;
- background: rgba(15, 23, 42, 0.9);
- color: #93c5fd;
- font-weight: 950;
- border: 1px solid rgba(147, 197, 253, 0.22);
-}
- 
-.answer.correct {
- background: rgba(22, 163, 74, 0.22);
- border-color: rgba(74, 222, 128, 0.9);
-}
- 
-.answer.correct .letter {
- background: #16a34a;
- color: white;
-}
- 
-.answer.wrong {
- background: rgba(220, 38, 38, 0.22);
- border-color: rgba(248, 113, 113, 0.9);
-}
- 
-.answer.wrong .letter {
- background: #dc2626;
- color: white;
-}
- 
-.feedback {
- margin-top: 14px;
- padding: 13px;
- border-radius: 17px;
- font-size: 14px;
- line-height: 1.45;
- border: 1px solid rgba(148, 163, 184, 0.14);
-}
- 
-.feedback.good {
- background: rgba(22, 163, 74, 0.16);
- color: #bbf7d0;
-}
- 
-.feedback.bad {
- background: rgba(220, 38, 38, 0.15);
- color: #fecaca;
-}
- 
-.result-title {
- font-size: 27px;
- font-weight: 950;
- margin: 0 0 6px;
-}
- 
-.result-subtitle {
- color: #cbd5e1;
- margin: 0 0 16px;
- line-height: 1.45;
-}
- 
-.chart-box {
- display: grid;
- place-items: center;
- margin: 10px 0 18px;
-}
- 
-#chart {
- width: 230px;
- height: 230px;
-}
- 
-.result-stats {
- display: grid;
- grid-template-columns: 1fr 1fr;
- gap: 10px;
- margin-bottom: 16px;
-}
- 
-.stat {
- border-radius: 18px;
- background: rgba(30, 41, 59, 0.76);
- border: 1px solid rgba(148, 163, 184, 0.14);
- padding: 14px;
-}
- 
-.stat-num {
- font-size: 25px;
- font-weight: 950;
-}
- 
-.stat-label {
- font-size: 12px;
- color: #94a3b8;
- margin-top: 4px;
-}
- 
-.mistakes-title {
- font-size: 18px;
- font-weight: 950;
- margin: 18px 0 10px;
-}
- 
-.mistake {
- background: rgba(30, 41, 59, 0.72);
- border: 1px solid rgba(248, 113, 113, 0.28);
- border-radius: 18px;
- padding: 13px;
- margin-bottom: 10px;
-}
- 
-.mistake-q {
- font-size: 14px;
- font-weight: 900;
- margin-bottom: 8px;
- line-height: 1.35;
-}
- 
-.mistake-line {
- font-size: 13px;
- color: #cbd5e1;
- line-height: 1.45;
-}
- 
-.red {
- color: #fca5a5;
- font-weight: 900;
-}
- 
-.green {
- color: #86efac;
- font-weight: 900;
-}
- 
-.empty {
- color: #bbf7d0;
- background: rgba(22, 163, 74, 0.16);
- border: 1px solid rgba(74, 222, 128, 0.35);
- padding: 14px;
- border-radius: 18px;
- font-size: 15px;
-}
- 
-.footer-buttons {
- display: grid;
- gap: 10px;
- margin-top: 14px;
-}
- 
-@media (max-width: 390px) {
- .app {
-   padding: 14px;
- }
- 
- .question {
-   font-size: 18px;
- }
- 
- .start-title {
-   font-size: 24px;
- }
-}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+ <script src="script.js">
+  <title>KTZH TEST</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100svh;
+      background:
+        radial-gradient(circle at top left, rgba(37, 99, 235, 0.35), transparent 32%),
+        radial-gradient(circle at top right, rgba(249, 115, 22, 0.22), transparent 30%),
+        linear-gradient(180deg, #020617 0%, #0f172a 100%);
+      color: #e5e7eb;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      padding: env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
+    }
+
+    button {
+      font-family: inherit;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 430px;
+      min-height: 100svh;
+      margin: 0 auto;
+      padding: 16px;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .brand-title {
+      font-size: 24px;
+      font-weight: 950;
+      letter-spacing: 0.4px;
+    }
+
+    .brand-subtitle {
+      color: #94a3b8;
+      font-size: 13px;
+      margin-top: 3px;
+    }
+
+    .pill {
+      padding: 8px 11px;
+      border-radius: 999px;
+      background: rgba(37, 99, 235, 0.18);
+      border: 1px solid rgba(96, 165, 250, 0.35);
+      color: #bfdbfe;
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .card {
+      background: rgba(15, 23, 42, 0.88);
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.36);
+      backdrop-filter: blur(14px);
+      border-radius: 24px;
+      padding: 18px;
+    }
+
+    .screen {
+      display: block;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .hero-title {
+      font-size: 27px;
+      line-height: 1.12;
+      font-weight: 950;
+      margin: 0 0 10px;
+    }
+
+    .hero-text {
+      color: #cbd5e1;
+      line-height: 1.5;
+      font-size: 15px;
+      margin: 0 0 18px;
+    }
+
+    .section-grid {
+      display: grid;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .section-btn {
+      width: 100%;
+      min-height: 76px;
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      border-radius: 22px;
+      padding: 14px;
+      color: #fff;
+      text-align: left;
+      cursor: pointer;
+      background: rgba(30, 41, 59, 0.82);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      transition: 0.18s ease;
+    }
+
+    .section-btn:active {
+      transform: scale(0.98);
+    }
+
+    .section-btn .name {
+      font-size: 18px;
+      font-weight: 900;
+    }
+
+    .section-btn .count {
+      font-size: 12px;
+      color: #cbd5e1;
+      margin-top: 4px;
+    }
+
+    .section-btn .icon {
+      font-size: 31px;
+    }
+
+    .vls { background: linear-gradient(135deg, rgba(37, 99, 235, 0.95), rgba(30, 64, 175, 0.80)); }
+    .biot { background: linear-gradient(135deg, rgba(249, 115, 22, 0.95), rgba(220, 38, 38, 0.78)); }
+    .pte { background: linear-gradient(135deg, rgba(34, 197, 94, 0.92), rgba(22, 101, 52, 0.82)); }
+
+    .mode-box {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .mode-btn {
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      background: rgba(30, 41, 59, 0.78);
+      color: #e5e7eb;
+      border-radius: 18px;
+      padding: 13px;
+      font-size: 14px;
+      font-weight: 850;
+      cursor: pointer;
+    }
+
+    .mode-btn.active {
+      border-color: rgba(96, 165, 250, 0.8);
+      background: rgba(37, 99, 235, 0.35);
+      color: #dbeafe;
+    }
+
+    .small-actions {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .btn {
+      width: 100%;
+      border: none;
+      border-radius: 18px;
+      padding: 15px 16px;
+      font-size: 16px;
+      font-weight: 900;
+      color: white;
+      background: linear-gradient(135deg, #2563eb, #7c3aed);
+      box-shadow: 0 14px 30px rgba(37, 99, 235, 0.35);
+      cursor: pointer;
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn.secondary {
+      background: rgba(30, 41, 59, 0.95);
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      box-shadow: none;
+    }
+
+    .btn.danger {
+      background: linear-gradient(135deg, #ef4444, #991b1b);
+      box-shadow: 0 14px 30px rgba(239, 68, 68, 0.25);
+    }
+
+    .btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .top-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      gap: 10px;
+    }
+
+    .counter {
+      font-size: 13px;
+      color: #cbd5e1;
+      font-weight: 800;
+    }
+
+    .score-mini {
+      font-size: 13px;
+      color: #86efac;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .progress-wrap {
+      height: 9px;
+      width: 100%;
+      background: rgba(30, 41, 59, 0.95);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 16px;
+      border: 1px solid rgba(148, 163, 184, 0.12);
+    }
+
+    .progress {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #22c55e, #3b82f6, #a855f7);
+      border-radius: 999px;
+      transition: width 0.35s ease;
+    }
+
+    .question-card {
+      margin-bottom: 14px;
+    }
+
+    .question-topic {
+      display: inline-flex;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(14, 165, 233, 0.12);
+      color: #7dd3fc;
+      border: 1px solid rgba(125, 211, 252, 0.2);
+      font-size: 12px;
+      font-weight: 900;
+      margin-bottom: 13px;
+    }
+
+    .question {
+      font-size: 20px;
+      line-height: 1.35;
+      font-weight: 900;
+    }
+
+    .answers {
+      display: grid;
+      gap: 11px;
+    }
+
+    .answer {
+      width: 100%;
+      text-align: left;
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      background: rgba(30, 41, 59, 0.88);
+      color: #e5e7eb;
+      border-radius: 18px;
+      padding: 14px;
+      font-size: 15px;
+      line-height: 1.35;
+      display: flex;
+      gap: 11px;
+      align-items: flex-start;
+      cursor: pointer;
+      transition: 0.18s ease;
+    }
+
+    .answer:active {
+      transform: scale(0.985);
+    }
+
+    .letter {
+      min-width: 30px;
+      height: 30px;
+      border-radius: 11px;
+      display: grid;
+      place-items: center;
+      background: rgba(15, 23, 42, 0.9);
+      color: #93c5fd;
+      font-weight: 950;
+      border: 1px solid rgba(147, 197, 253, 0.22);
+    }
+
+    .answer.correct {
+      background: rgba(22, 163, 74, 0.24);
+      border-color: rgba(74, 222, 128, 0.95);
+    }
+
+    .answer.correct .letter {
+      background: #16a34a;
+      color: white;
+    }
+
+    .answer.wrong {
+      background: rgba(220, 38, 38, 0.24);
+      border-color: rgba(248, 113, 113, 0.95);
+    }
+
+    .answer.wrong .letter {
+      background: #dc2626;
+      color: white;
+    }
+
+    .feedback {
+      margin-top: 14px;
+      padding: 13px;
+      border-radius: 17px;
+      font-size: 14px;
+      line-height: 1.45;
+      border: 1px solid rgba(148, 163, 184, 0.14);
+    }
+
+    .feedback.good {
+      background: rgba(22, 163, 74, 0.16);
+      color: #bbf7d0;
+    }
+
+    .feedback.bad {
+      background: rgba(220, 38, 38, 0.15);
+      color: #fecaca;
+    }
+
+    .result-title {
+      font-size: 27px;
+      font-weight: 950;
+      margin: 0 0 6px;
+    }
+
+    .result-subtitle {
+      color: #cbd5e1;
+      margin: 0 0 16px;
+      line-height: 1.45;
+    }
+
+    .chart-box {
+      display: grid;
+      place-items: center;
+      margin: 10px 0 18px;
+    }
+
+    #chart {
+      width: 230px;
+      height: 230px;
+    }
+
+    .result-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .stat {
+      border-radius: 18px;
+      background: rgba(30, 41, 59, 0.76);
+      border: 1px solid rgba(148, 163, 184, 0.14);
+      padding: 14px;
+    }
+
+    .stat-num {
+      font-size: 25px;
+      font-weight: 950;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: #94a3b8;
+      margin-top: 4px;
+    }
+
+    .green {
+      color: #86efac;
+    }
+
+    .red {
+      color: #fca5a5;
+    }
+
+    .mistakes-title {
+      font-size: 18px;
+      font-weight: 950;
+      margin: 18px 0 10px;
+    }
+
+    .mistake {
+      background: rgba(30, 41, 59, 0.72);
+      border: 1px solid rgba(248, 113, 113, 0.28);
+      border-radius: 18px;
+      padding: 13px;
+      margin-bottom: 10px;
+    }
+
+    .mistake-q {
+      font-size: 14px;
+      font-weight: 900;
+      margin-bottom: 8px;
+      line-height: 1.35;
+    }
+
+    .mistake-line {
+      font-size: 13px;
+      color: #cbd5e1;
+      line-height: 1.45;
+    }
+
+    .empty {
+      color: #bbf7d0;
+      background: rgba(22, 163, 74, 0.16);
+      border: 1px solid rgba(74, 222, 128, 0.35);
+      padding: 14px;
+      border-radius: 18px;
+      font-size: 15px;
+    }
+
+    .footer-buttons {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    @media (max-width: 390px) {
+      .app {
+        padding: 14px;
+      }
+
+      .question {
+        font-size: 18px;
+      }
+
+      .hero-title {
+        font-size: 24px;
+      }
+    }
+  </style>
 </head>
- 
+
 <body>
-<div class="app">
- <div class="header">
-   <div>
-     <div class="logo-title">KTZH TEST</div>
-     <div class="logo-subtitle">Тренажёр для подготовки</div>
-   </div>
-   <div class="badge">iPhone 11</div>
- </div>
- 
- <section id="startScreen" class="card start-card">
-   <h1 class="start-title">Выбери раздел</h1>
-   <p class="start-text">
-     Мобильный тренажёр: выбираешь ответ, сразу видишь правильный вариант.
-     В конце будет график и список вопросов, где были ошибки.
-   </p>
- 
-   <div class="feature-list">
-     <div class="feature">🌙 Тёмный дизайн под телефон</div>
-     <div class="feature">✅ Правильный ответ подсвечивается зелёным</div>
-     <div class="feature">❌ Ошибка подсвечивается красным</div>
-     <div class="feature">📊 График результата в конце</div>
-   </div>
- 
-   <div class="menu-buttons">
-     <button class="btn" onclick="chooseTest('vls')">📡 ВЛС</button>
-     <button class="btn safety" onclick="chooseTest('biot')">🦺 Охрана труда</button>
-   </div>
- </section>
- 
- <section id="quizScreen" class="hidden">
-   <div class="top-line">
-     <div class="counter" id="counter">Вопрос 1 / 1</div>
-     <div class="score-mini" id="miniScore">Верно: 0</div>
-   </div>
- 
-   <div class="progress-wrap">
-     <div class="progress" id="progress"></div>
-   </div>
- 
-   <div class="card question-card">
-     <div class="question-topic" id="questionTopic">Тест</div>
-     <div class="question" id="questionText"></div>
-     <div id="feedback" class="feedback hidden"></div>
-   </div>
- 
-   <div class="answers" id="answersBox"></div>
- 
-   <button class="btn" id="nextBtn" onclick="nextQuestion()" disabled>Далее</button>
- </section>
- 
- <section id="resultScreen" class="card hidden">
-   <h2 class="result-title">Результат</h2>
-   <p class="result-subtitle" id="resultText"></p>
- 
-   <div class="chart-box">
-     <canvas id="chart" width="230" height="230"></canvas>
-   </div>
- 
-   <div class="result-stats">
-     <div class="stat">
-       <div class="stat-num green" id="rightCount">0</div>
-       <div class="stat-label">Правильно</div>
-     </div>
-     <div class="stat">
-       <div class="stat-num red" id="wrongCount">0</div>
-       <div class="stat-label">Ошибки</div>
-     </div>
-   </div>
- 
-   <div class="mistakes-title">Ошибки</div>
-   <div id="mistakesBox"></div>
- 
-   <div class="footer-buttons">
-     <button class="btn" onclick="restartSameTest()">Пройти этот тест заново</button>
-     <button class="btn secondary" onclick="backToMenu()">Выбрать другой раздел</button>
-   </div>
- </section>
-</div>
+  <div class="app">
+    <div class="header">
+      <div>
+        <div class="brand-title">KTZH TEST</div>
+        <div class="brand-subtitle">Тренажёр для экзамена</div>
+      </div>
+      <div class="pill">GitHub Pages</div>
+    </div>
 
+    <section id="startScreen" class="screen card">
+      <h1 class="hero-title">Выбери раздел</h1>
+      <p class="hero-text">
+        Вопросы берутся из твоего файла <b>script.js</b>. Сначала подключи массивы:
+        <b>vlsQuestions</b>, <b>biotQuestions</b>, <b>pteQuestions</b>.
+      </p>
 
+      <div class="mode-box">
+        <button id="studyModeBtn" class="mode-btn active" onclick="setMode('study')">📖 Обучение</button>
+        <button id="examModeBtn" class="mode-btn" onclick="setMode('exam')">🎯 Экзамен</button>
+      </div>
 
+      <div class="section-grid">
+        <button class="section-btn vls" onclick="chooseTest('vls')">
+          <div>
+            <div class="name">📡 ВЛС</div>
+            <div class="count" id="vlsCount">0 вопросов</div>
+          </div>
+          <div class="icon">›</div>
+        </button>
+
+        <button class="section-btn biot" onclick="chooseTest('biot')">
+          <div>
+            <div class="name">🦺 Охрана труда</div>
+            <div class="count" id="biotCount">0 вопросов</div>
+          </div>
+          <div class="icon">›</div>
+        </button>
+
+        <button class="section-btn pte" onclick="chooseTest('pte')">
+          <div>
+            <div class="name">📘 ПТЭ</div>
+            <div class="count" id="pteCount">0 вопросов</div>
+          </div>
+          <div class="icon">›</div>
+        </button>
+      </div>
+
+      <div class="small-actions">
+        <button class="btn secondary" onclick="startMistakesMode()">🔁 Повторить ошибки</button>
+        <button class="btn danger" onclick="clearSavedMistakes()">🗑 Очистить ошибки</button>
+      </div>
+    </section>
+
+    <section id="quizScreen" class="screen hidden">
+      <div class="top-line">
+        <div class="counter" id="counter">Вопрос 1 / 150</div>
+        <div class="score-mini" id="miniScore">Верно: 0</div>
+      </div>
+
+      <div class="progress-wrap">
+        <div class="progress" id="progress"></div>
+      </div>
+
+      <div class="card question-card">
+        <div class="question-topic" id="questionTopic">Раздел</div>
+        <div class="question" id="questionText"></div>
+        <div id="feedback" class="feedback hidden"></div>
+      </div>
+
+      <div class="answers" id="answersBox"></div>
+
+      <div class="footer-buttons">
+        <button class="btn" id="nextBtn" onclick="nextQuestion()" disabled>Далее</button>
+        <button class="btn secondary" onclick="goHome()">В меню</button>
+      </div>
+    </section>
+
+    <section id="resultScreen" class="screen card hidden">
+      <h2 class="result-title">Результат</h2>
+      <p class="result-subtitle" id="resultText"></p>
+
+      <div class="chart-box">
+        <canvas id="chart" width="230" height="230"></canvas>
+      </div>
+
+      <div class="result-stats">
+        <div class="stat">
+          <div class="stat-num green" id="rightCount">0</div>
+          <div class="stat-label">Правильно</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num red" id="wrongCount">0</div>
+          <div class="stat-label">Ошибки</div>
+        </div>
+      </div>
+
+      <div class="mistakes-title">Ошибки</div>
+      <div id="mistakesBox"></div>
+
+      <div class="footer-buttons">
+        <button class="btn" onclick="restartCurrent()">Пройти заново</button>
+        <button class="btn secondary" onclick="startMistakesMode()">Повторить ошибки</button>
+        <button class="btn secondary" onclick="goHome()">В меню</button>
+      </div>
+    </section>
+  </div>
+
+  <!-- ВАЖНО:
+       Сначала подключается твой файл с вопросами,
+       потом файл с логикой.
+  -->
+  <script src="script.js"></script>
+  <script src="logic.js"></script>
 </body>
 </html>
