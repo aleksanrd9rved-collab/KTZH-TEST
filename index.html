@@ -457,6 +457,15 @@
         font-size: 24px;
       }
     }
+
+
+    .zhts {
+  background: linear-gradient(
+    135deg,
+    rgba(14,165,233,0.95),
+    rgba(6,78,59,0.82)
+  );
+}
   </style>
 </head>
 
@@ -507,6 +516,18 @@
           <div class="icon">›</div>
         </button>
       </div>
+
+
+<button class="section-btn zhts" onclick="chooseTest('zhts')">
+  <div>
+    <div class="name">🚆 ЖТС</div>
+    <div class="count" id="zhtsCount">30 вопросов</div>
+  </div>
+  <div class="icon">›</div>
+</button>
+
+
+      
 
       <div class="small-actions">
         <button class="btn secondary" onclick="startMistakesMode()">🔁 Повторить ошибки</button>
