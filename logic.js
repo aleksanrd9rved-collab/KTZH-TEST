@@ -441,3 +441,7 @@ function startVlsPart(start, end, title) {
   vlsPartsScreen.classList.add("hidden");
   startQuiz();
 }
+
+
+window.openVlsPartsMenu = openVlsPartsMenu;
+window.startVlsPart = startVlsPart;
