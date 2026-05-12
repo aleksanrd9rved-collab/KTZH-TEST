@@ -27,6 +27,7 @@ const testNames = {
 const startScreen = document.getElementById("startScreen");
 const quizScreen = document.getElementById("quizScreen");
 const resultScreen = document.getElementById("resultScreen");
+const vlsPartsScreen = document.getElementById("vlsPartsScreen");
 const questionText = document.getElementById("questionText");
 const questionTopic = document.getElementById("questionTopic");
 const answersBox = document.getElementById("answersBox");
@@ -314,10 +315,10 @@ function restartCurrent() {
   questions = shuffleQuestions(copyQuestions(originalQuestions));
   startQuiz();
 }
-
 function goHome() {
   quizScreen.classList.add("hidden");
   resultScreen.classList.add("hidden");
+  vlsPartsScreen.classList.add("hidden");
   startScreen.classList.remove("hidden");
   updateCounts();
 }
@@ -395,4 +396,42 @@ function escapeHtml(text) {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
+}
+
+
+
+
+
+function openVlsPartsMenu() {
+  startScreen.classList.add("hidden");
+  quizScreen.classList.add("hidden");
+  resultScreen.classList.add("hidden");
+  vlsPartsScreen.classList.remove("hidden");
+}
+
+function startVlsPart(start, end, title) {
+  if (typeof vlsQuestions === "undefined" || !Array.isArray(vlsQuestions)) {
+    alert("Массив vlsQuestions не найден в script.js");
+    return;
+  }
+
+  const part = vlsQuestions.slice(start, end);
+
+  if (part.length === 0) {
+    alert("В этом блоке нет вопросов");
+    return;
+  }
+
+  stopTimer();
+
+  isMistakesMode = false;
+  isFinalExam = false;
+  currentTestKey = "vls";
+  currentTestName = title;
+
+  questions = shuffleQuestions(copyQuestions(part));
+  originalQuestions = copyQuestions(questions);
+
+  vlsPartsScreen.classList.add("hidden");
+  startQuiz();
 }
