@@ -164,6 +164,23 @@
       background: linear-gradient(135deg, rgba(14, 165, 233, 0.95), rgba(6, 95, 70, 0.86));
     }
 
+.vls {
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.95), rgba(30, 64, 175, 0.80));
+}
+
+.vls-parts {
+  background: linear-gradient(
+    135deg,
+    rgba(59, 130, 246, 0.95),
+    rgba(124, 58, 237, 0.86)
+  );
+}
+
+.biot {
+  background: linear-gradient(135deg, rgba(249, 115, 22, 0.95), rgba(220, 38, 38, 0.78));
+}
+
+    
     .exam {
       background: linear-gradient(135deg, rgba(168, 85, 247, 0.95), rgba(37, 99, 235, 0.84));
       margin-top: 14px;
@@ -548,6 +565,15 @@
           <div class="icon">›</div>
         </button>
 
+<button class="section-btn vls-parts" onclick="openVlsPartsMenu()">
+  <div>
+    <div class="name">📚 ВЛС по частям</div>
+    <div class="count">1–50 • 51–100 • 101–150</div>
+  </div>
+  <div class="icon">›</div>
+</button>
+
+        
         <button class="section-btn biot" onclick="chooseTest('biot')">
           <div>
             <div class="name">🦺 Охрана труда</div>
@@ -579,6 +605,54 @@
       </div>
     </section>
 
+
+<section id="vlsPartsScreen" class="screen card hidden">
+  <h1 class="hero-title">📚 ВЛС по частям</h1>
+  <p class="hero-text">
+    Выбери блок вопросов. Так легче учить и запоминать материал по 50 вопросов.
+  </p>
+
+  <div class="section-grid">
+    <button class="section-btn vls" onclick="startVlsPart(0, 50, 'ВЛС 1–50')">
+      <div>
+        <div class="name">📡 ВЛС 1–50</div>
+        <div class="count">Первый блок вопросов</div>
+      </div>
+      <div class="icon">›</div>
+    </button>
+
+    <button class="section-btn vls" onclick="startVlsPart(50, 100, 'ВЛС 51–100')">
+      <div>
+        <div class="name">📡 ВЛС 51–100</div>
+        <div class="count">Второй блок вопросов</div>
+      </div>
+      <div class="icon">›</div>
+    </button>
+
+    <button class="section-btn vls" onclick="startVlsPart(100, 150, 'ВЛС 101–150')">
+      <div>
+        <div class="name">📡 ВЛС 101–150</div>
+        <div class="count">Третий блок вопросов</div>
+      </div>
+      <div class="icon">›</div>
+    </button>
+
+    <button class="section-btn exam" onclick="startVlsPart(0, 150, 'ВЛС все 150')">
+      <div>
+        <div class="name">🔥 ВЛС все 150</div>
+        <div class="count">Полная проверка по ВЛС</div>
+      </div>
+      <div class="icon">›</div>
+    </button>
+  </div>
+
+  <div class="small-actions">
+    <button class="btn secondary" onclick="goHome()">⬅ Назад в меню</button>
+  </div>
+</section>
+
+
+    
     <section id="quizScreen" class="screen hidden">
       <div id="timerBox" class="exam-timer hidden">
         <span>⏱ Осталось времени</span>
