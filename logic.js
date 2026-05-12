@@ -435,7 +435,8 @@ function startVlsPart(start, end, title) {
   currentTestKey = "vls";
   currentTestName = title;
 
-  questions = shuffleQuestions(copyQuestions(part));
+  //questions = shuffleQuestions(copyQuestions(part));
+  questions = copyQuestions(part);
   originalQuestions = copyQuestions(questions);
 
   vlsPartsScreen.classList.add("hidden");
