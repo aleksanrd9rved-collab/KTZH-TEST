@@ -409,6 +409,15 @@ function openVlsPartsMenu() {
   vlsPartsScreen.classList.remove("hidden");
 }
 
+
+
+function openVlsPartsMenu() {
+  startScreen.classList.add("hidden");
+  quizScreen.classList.add("hidden");
+  resultScreen.classList.add("hidden");
+  vlsPartsScreen.classList.remove("hidden");
+}
+
 function startVlsPart(start, end, title) {
   if (typeof vlsQuestions === "undefined" || !Array.isArray(vlsQuestions)) {
     alert("Массив vlsQuestions не найден в script.js");
@@ -422,10 +431,7 @@ function startVlsPart(start, end, title) {
     return;
   }
 
-  stopTimer();
-
   isMistakesMode = false;
-  isFinalExam = false;
   currentTestKey = "vls";
   currentTestName = title;
 
