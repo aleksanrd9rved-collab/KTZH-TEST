@@ -164,6 +164,15 @@
       background: linear-gradient(135deg, rgba(14, 165, 233, 0.95), rgba(6, 95, 70, 0.86));
     }
 
+
+    .zhts-parts {
+  background: linear-gradient(
+    135deg,
+    rgba(6, 182, 212, 0.95),
+    rgba(20, 184, 166, 0.82)
+  );
+}
+
 .vls {
   background: linear-gradient(135deg, rgba(37, 99, 235, 0.95), rgba(30, 64, 175, 0.80));
 }
@@ -597,6 +606,15 @@
           </div>
           <div class="icon">›</div>
         </button>
+
+<button class="section-btn zhts-parts" onclick="openZhtsPartsMenu()">
+  <div>
+    <div class="name">📚 ЖТС по частям</div>
+    <div class="count">1–30 • 31–60 • 61–90 • 91–120</div>
+  </div>
+  <div class="icon">›</div>
+</button>
+        
       </div>
 
       <div class="small-actions">
@@ -652,6 +670,64 @@
 </section>
 
 
+
+
+<section id="zhtsPartsScreen" class="screen card hidden">
+  <h1 class="hero-title">📚 ЖТС по частям</h1>
+  <p class="hero-text">
+    Выбери блок вопросов. Так удобнее учить ЖТС по 30 вопросов.
+  </p>
+
+  <div class="section-grid">
+    <button class="section-btn zhts" onclick="startZhtsPart(0, 30, 'ЖТС 1–30')">
+      <div>
+        <div class="name">🚆 ЖТС 1–30</div>
+        <div class="count">Первый блок вопросов</div>
+      </div>
+      <div class="icon">›</div>
+    </button>
+
+    <button class="section-btn zhts" onclick="startZhtsPart(30, 60, 'ЖТС 31–60')">
+      <div>
+        <div class="name">🚆 ЖТС 31–60</div>
+        <div class="count">Второй блок вопросов</div>
+      </div>
+      <div class="icon">›</div>
+    </button>
+
+    <button class="section-btn zhts" onclick="startZhtsPart(60, 90, 'ЖТС 61–90')">
+      <div>
+        <div class="name">🚆 ЖТС 61–90</div>
+        <div class="count">Третий блок вопросов</div>
+      </div>
+      <div class="icon">›</div>
+    </button>
+
+    <button class="section-btn zhts" onclick="startZhtsPart(90, 120, 'ЖТС 91–120')">
+      <div>
+        <div class="name">🚆 ЖТС 91–120</div>
+        <div class="count">Четвёртый блок вопросов</div>
+      </div>
+      <div class="icon">›</div>
+    </button>
+
+    <button class="section-btn exam" onclick="startZhtsPart(0, 120, 'ЖТС все 120')">
+      <div>
+        <div class="name">🔥 ЖТС все 120</div>
+        <div class="count">Полная проверка по ЖТС</div>
+      </div>
+      <div class="icon">›</div>
+    </button>
+  </div>
+
+  <div class="small-actions">
+    <button class="btn secondary" onclick="goHome()">⬅ Назад в меню</button>
+  </div>
+</section>
+
+
+
+    
     
     <section id="quizScreen" class="screen hidden">
       <div id="timerBox" class="exam-timer hidden">
