@@ -28,6 +28,7 @@ const startScreen = document.getElementById("startScreen");
 const quizScreen = document.getElementById("quizScreen");
 const resultScreen = document.getElementById("resultScreen");
 const vlsPartsScreen = document.getElementById("vlsPartsScreen");
+const zhtsPartsScreen = document.getElementById("zhtsPartsScreen");
 const questionText = document.getElementById("questionText");
 const questionTopic = document.getElementById("questionTopic");
 const answersBox = document.getElementById("answersBox");
@@ -319,6 +320,7 @@ function goHome() {
   quizScreen.classList.add("hidden");
   resultScreen.classList.add("hidden");
   vlsPartsScreen.classList.add("hidden");
+  zhtsPartsScreen.classList.add("hidden");
   startScreen.classList.remove("hidden");
   updateCounts();
 }
@@ -446,3 +448,48 @@ function startVlsPart(start, end, title) {
 
 window.openVlsPartsMenu = openVlsPartsMenu;
 window.startVlsPart = startVlsPart;
+
+
+
+
+
+
+
+
+
+function openZhtsPartsMenu() {
+  startScreen.classList.add("hidden");
+  quizScreen.classList.add("hidden");
+  resultScreen.classList.add("hidden");
+  vlsPartsScreen.classList.add("hidden");
+  zhtsPartsScreen.classList.remove("hidden");
+}
+
+function startZhtsPart(start, end, title) {
+  if (typeof zhtsQuestions === "undefined" || !Array.isArray(zhtsQuestions)) {
+    alert("Массив zhtsQuestions не найден в script.js");
+    return;
+  }
+
+  const part = zhtsQuestions.slice(start, end);
+
+  if (part.length === 0) {
+    alert("В этом блоке нет вопросов");
+    return;
+  }
+
+  isMistakesMode = false;
+  currentTestKey = "zhts";
+  currentTestName = title;
+
+  // В частях ЖТС вопросы идут по порядку, без перемешивания
+  questions = copyQuestions(part);
+  originalQuestions = copyQuestions(questions);
+
+  zhtsPartsScreen.classList.add("hidden");
+  startQuiz();
+}
+
+window.openZhtsPartsMenu = openZhtsPartsMenu;
+window.startZhtsPart = startZhtsPart;
+
