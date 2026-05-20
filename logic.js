@@ -27,6 +27,8 @@ const testNames = {
 const startScreen = document.getElementById("startScreen");
 const quizScreen = document.getElementById("quizScreen");
 const resultScreen = document.getElementById("resultScreen");
+const timerBox = document.getElementById("timerBox");
+const timerText = document.getElementById("timerText");
 const vlsPartsScreen = document.getElementById("vlsPartsScreen");
 const zhtsPartsScreen = document.getElementById("zhtsPartsScreen");
 const questionText = document.getElementById("questionText");
@@ -492,4 +494,137 @@ function startZhtsPart(start, end, title) {
 
 window.openZhtsPartsMenu = openZhtsPartsMenu;
 window.startZhtsPart = startZhtsPart;
+
+
+
+
+//Кнопка экзамен на 120 вопросов 
+
+
+
+function takeRandomQuestions(array, count) {
+  const copied = copyQuestions(array);
+  const shuffled = shuffleQuestions(copied);
+  return shuffled.slice(0, count);
+}
+
+function startExam120() {
+  if (
+    typeof vlsQuestions === "undefined" ||
+    typeof pteQuestions === "undefined" ||
+    typeof biotQuestions === "undefined" ||
+    typeof zhtsQuestions === "undefined"
+  ) {
+    alert("Не найдены массивы вопросов. Проверь script.js");
+    return;
+  }
+
+  if (
+    vlsQuestions.length < 30 ||
+    pteQuestions.length < 30 ||
+    biotQuestions.length < 30 ||
+    zhtsQuestions.length < 30
+  ) {
+    alert("В одном из разделов меньше 30 вопросов");
+    return;
+  }
+
+  const vlsPart = takeRandomQuestions(vlsQuestions, 30);
+  const ptePart = takeRandomQuestions(pteQuestions, 30);
+  const biotPart = takeRandomQuestions(biotQuestions, 30);
+  const zhtsPart = takeRandomQuestions(zhtsQuestions, 30);
+
+  questions = shuffleQuestions([
+    ...vlsPart,
+    ...ptePart,
+    ...biotPart,
+    ...zhtsPart
+  ]);
+
+  originalQuestions = copyQuestions(questions);
+
+  isMistakesMode = false;
+  isFinalExam = true;
+  currentTestKey = "exam";
+  currentTestName = "Экзамен 120 вопросов";
+
+  mistakes = [];
+  score = 0;
+  currentIndex = 0;
+  selectedAnswer = null;
+
+  startScreen.classList.add("hidden");
+  resultScreen.classList.add("hidden");
+  vlsPartsScreen.classList.add("hidden");
+
+  if (typeof zhtsPartsScreen !== "undefined" && zhtsPartsScreen) {
+    zhtsPartsScreen.classList.add("hidden");
+  }
+
+  quizScreen.classList.remove("hidden");
+
+  startQuiz();
+  startExamTimer(60 * 60);
+}
+
+window.startExam120 = startExam120;
+
+
+
+
+
+
+
+// Таймер на экзамен 
+
+let examTimer = null;
+let examTimeLeft = 0;
+
+function startExamTimer(seconds) {
+  examTimeLeft = seconds;
+
+  if (examTimer) {
+    clearInterval(examTimer);
+  }
+
+  timerBox.classList.remove("hidden");
+
+  updateExamTimerText();
+
+  examTimer = setInterval(() => {
+    examTimeLeft--;
+
+    updateExamTimerText();
+
+    if (examTimeLeft <= 0) {
+      clearInterval(examTimer);
+      examTimer = null;
+
+      alert("Время экзамена закончилось");
+      finishQuiz();
+    }
+  }, 1000);
+}
+
+function updateExamTimerText() {
+  const minutes = Math.floor(examTimeLeft / 60);
+  const seconds = examTimeLeft % 60;
+
+  timerText.textContent =
+    String(minutes).padStart(2, "0") +
+    ":" +
+    String(seconds).padStart(2, "0");
+}
+
+function stopTimer() {
+  if (examTimer) {
+    clearInterval(examTimer);
+    examTimer = null;
+  }
+
+  timerBox.classList.add("hidden");
+}
+
+
+
 
