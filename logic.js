@@ -31,6 +31,7 @@ const timerBox = document.getElementById("timerBox");
 const timerText = document.getElementById("timerText");
 const vlsPartsScreen = document.getElementById("vlsPartsScreen");
 const zhtsPartsScreen = document.getElementById("zhtsPartsScreen");
+const ptePartsScreen = document.getElementById("ptePartsScreen");
 const questionText = document.getElementById("questionText");
 const questionTopic = document.getElementById("questionTopic");
 const answersBox = document.getElementById("answersBox");
@@ -324,6 +325,7 @@ function goHome() {
   vlsPartsScreen.classList.add("hidden");
   zhtsPartsScreen.classList.add("hidden");
   startScreen.classList.remove("hidden");
+  ptePartsScreen.classList.add("hidden");
   updateCounts();
 }
 
@@ -626,5 +628,49 @@ function stopTimer() {
 }
 
 
+
+
+
+
+
+
+
+function openPtePartsMenu() {
+  startScreen.classList.add("hidden");
+  quizScreen.classList.add("hidden");
+  resultScreen.classList.add("hidden");
+
+  vlsPartsScreen.classList.add("hidden");
+  zhtsPartsScreen.classList.add("hidden");
+  ptePartsScreen.classList.remove("hidden");
+}
+
+function startPtePart(start, end, title) {
+  if (typeof pteQuestions === "undefined" || !Array.isArray(pteQuestions)) {
+    alert("Массив pteQuestions не найден в script.js");
+    return;
+  }
+
+  const part = pteQuestions.slice(start, end);
+
+  if (part.length === 0) {
+    alert("В этом блоке нет вопросов");
+    return;
+  }
+
+  isMistakesMode = false;
+  currentTestKey = "pte";
+  currentTestName = title;
+
+  // В частях ПТЭ вопросы идут по порядку, без перемешивания
+  questions = copyQuestions(part);
+  originalQuestions = copyQuestions(questions);
+
+  ptePartsScreen.classList.add("hidden");
+  startQuiz();
+}
+
+window.openPtePartsMenu = openPtePartsMenu;
+window.startPtePart = startPtePart;
 
 
