@@ -200,7 +200,7 @@ function selectAnswer(selectedIndex) {
   }
 
   miniScore.textContent = "Верно: " + score;
-}
+};
 
 function showAnswerFeedback(selectedIndex) {
   const q = questions[currentIndex];
