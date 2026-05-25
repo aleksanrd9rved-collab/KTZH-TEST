@@ -532,6 +532,18 @@
         font-size: 24px;
       }
     }
+
+
+
+
+
+    .pte-parts {
+  background: linear-gradient(
+    135deg,
+    rgba(34, 197, 94, 0.95),
+    rgba(21, 128, 61, 0.86)
+  );
+}
   </style>
 </head>
 
@@ -598,6 +610,16 @@
           </div>
           <div class="icon">›</div>
         </button>
+
+
+<button class="section-btn pte-parts" onclick="openPtePartsMenu()">
+  <div>
+    <div class="name">📚 ПТЭ по частям</div>
+    <div class="count">1–30 • 31–60 • 61–90 • 91–120 • 121–150</div>
+  </div>
+  <div class="icon">›</div>
+</button>
+        
 
         <button class="section-btn zhts" onclick="chooseTest('zhts')">
           <div>
@@ -742,6 +764,77 @@
 
 
 
+
+
+
+<section id="ptePartsScreen" class="screen card hidden">
+  <h1 class="hero-title">📚 ПТЭ по частям</h1>
+  <p class="hero-text">
+    Выбери блок вопросов. Так удобнее учить ПТЭ по 30 вопросов.
+  </p>
+
+  <div class="section-grid">
+    <button class="section-btn pte" onclick="startPtePart(0, 30, 'ПТЭ 1–30')">
+      <div>
+        <div class="name">📘 ПТЭ 1–30</div>
+        <div class="count">Первый блок вопросов</div>
+      </div>
+      <div class="icon">›</div>
+    </button>
+
+    <button class="section-btn pte" onclick="startPtePart(30, 60, 'ПТЭ 31–60')">
+      <div>
+        <div class="name">📘 ПТЭ 31–60</div>
+        <div class="count">Второй блок вопросов</div>
+      </div>
+      <div class="icon">›</div>
+    </button>
+
+    <button class="section-btn pte" onclick="startPtePart(60, 90, 'ПТЭ 61–90')">
+      <div>
+        <div class="name">📘 ПТЭ 61–90</div>
+        <div class="count">Третий блок вопросов</div>
+      </div>
+      <div class="icon">›</div>
+    </button>
+
+    <button class="section-btn pte" onclick="startPtePart(90, 120, 'ПТЭ 91–120')">
+      <div>
+        <div class="name">📘 ПТЭ 91–120</div>
+        <div class="count">Четвёртый блок вопросов</div>
+      </div>
+      <div class="icon">›</div>
+    </button>
+
+    <button class="section-btn pte" onclick="startPtePart(120, 150, 'ПТЭ 121–150')">
+      <div>
+        <div class="name">📘 ПТЭ 121–150</div>
+        <div class="count">Пятый блок вопросов</div>
+      </div>
+      <div class="icon">›</div>
+    </button>
+
+    <button class="section-btn exam" onclick="startPtePart(0, 150, 'ПТЭ все 150')">
+      <div>
+        <div class="name">🔥 ПТЭ все 150</div>
+        <div class="count">Полная проверка по ПТЭ</div>
+      </div>
+      <div class="icon">›</div>
+    </button>
+  </div>
+
+  <div class="small-actions">
+    <button class="btn secondary" onclick="goHome()">⬅ Назад в меню</button>
+  </div>
+</section>
+
+
+
+
+
+
+
+    
     
     
     <section id="quizScreen" class="screen hidden">
