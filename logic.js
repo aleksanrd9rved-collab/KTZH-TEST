@@ -187,9 +187,9 @@ function selectAnswer(selectedIndex) {
   saveMistake(mistakeItem);
 }
 
-    mistakes.push(mistakeItem);
+   /* mistakes.push(mistakeItem);
     saveMistake(mistakeItem);
-  }
+  }*/
 
   if (mode === "study") {
     showAnswerFeedback(selectedIndex);
