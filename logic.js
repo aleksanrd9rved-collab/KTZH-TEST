@@ -32,6 +32,7 @@ const timerText = document.getElementById("timerText");
 const vlsPartsScreen = document.getElementById("vlsPartsScreen");
 const zhtsPartsScreen = document.getElementById("zhtsPartsScreen");
 const ptePartsScreen = document.getElementById("ptePartsScreen");
+const biotPartsScreen = document.getElementById("biotPartsScreen");
 const questionText = document.getElementById("questionText");
 const questionTopic = document.getElementById("questionTopic");
 const answersBox = document.getElementById("answersBox");
@@ -350,6 +351,7 @@ function goHome() {
   zhtsPartsScreen.classList.add("hidden");
   startScreen.classList.remove("hidden");
   ptePartsScreen.classList.add("hidden");
+  biotPartsScreen.classList.add("hidden");
   updateCounts();
 }
 
@@ -938,6 +940,61 @@ function showExamSubjectStats() {
 
 
 
+
+
+
+
+
+
+
+
+
+function openBiotPartsMenu() {
+  startScreen.classList.add("hidden");
+  quizScreen.classList.add("hidden");
+  resultScreen.classList.add("hidden");
+
+  if (typeof vlsPartsScreen !== "undefined" && vlsPartsScreen) {
+    vlsPartsScreen.classList.add("hidden");
+  }
+
+  if (typeof zhtsPartsScreen !== "undefined" && zhtsPartsScreen) {
+    zhtsPartsScreen.classList.add("hidden");
+  }
+
+  if (typeof ptePartsScreen !== "undefined" && ptePartsScreen) {
+    ptePartsScreen.classList.add("hidden");
+  }
+
+  biotPartsScreen.classList.remove("hidden");
+}
+
+function startBiotPart(start, end, title) {
+  if (typeof biotQuestions === "undefined" || !Array.isArray(biotQuestions)) {
+    alert("Массив biotQuestions не найден в script.js");
+    return;
+  }
+
+  const part = biotQuestions.slice(start, end);
+
+  if (part.length === 0) {
+    alert("В этом блоке нет вопросов");
+    return;
+  }
+
+  isMistakesMode = false;
+  currentTestKey = "biot";
+  currentTestName = title;
+
+  questions = copyQuestions(part);
+  originalQuestions = copyQuestions(questions);
+
+  biotPartsScreen.classList.add("hidden");
+  startQuiz();
+}
+
+window.openBiotPartsMenu = openBiotPartsMenu;
+window.startBiotPart = startBiotPart;
 
 
 
