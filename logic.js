@@ -999,3 +999,24 @@ window.startBiotPart = startBiotPart;
 
 
 
+
+
+
+if (typeof chooseTest === "function") window.chooseTest = chooseTest;
+
+if (typeof openVlsPartsMenu === "function") window.openVlsPartsMenu = openVlsPartsMenu;
+if (typeof startVlsPart === "function") window.startVlsPart = startVlsPart;
+
+if (typeof openPtePartsMenu === "function") window.openPtePartsMenu = openPtePartsMenu;
+if (typeof startPtePart === "function") window.startPtePart = startPtePart;
+
+if (typeof openZhtsPartsMenu === "function") window.openZhtsPartsMenu = openZhtsPartsMenu;
+if (typeof startZhtsPart === "function") window.startZhtsPart = startZhtsPart;
+
+if (typeof openBiotPartsMenu === "function") window.openBiotPartsMenu = openBiotPartsMenu;
+if (typeof startBiotPart === "function") window.startBiotPart = startBiotPart;
+
+if (typeof startExam120 === "function") window.startExam120 = startExam120;
+if (typeof goHome === "function") window.goHome = goHome;
+
+
