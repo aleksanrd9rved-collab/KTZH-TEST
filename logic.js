@@ -153,9 +153,12 @@ function selectAnswer(selectedIndex) {
   selectedAnswer = selectedIndex;
   nextBtn.disabled = false;
 
-  const q = questions[currentIndex];
+  const q = questions[currentIndex];//Добавляю новую 120
+  q.selected = selectedIndex;
+  q.isCorrect = selectedIndex === q.c;
 
-  if (selectedIndex === q.c) {
+  
+ /* if (selectedIndex === q.c) {
     score++;
   } else {
     const mistakeItem = {
@@ -164,7 +167,24 @@ function selectAnswer(selectedIndex) {
       answers: q.a,
       correct: q.c,
       your: selectedIndex
-    };
+    };*/
+
+  if (q.isCorrect) {
+  score++;
+} else {
+  const mistakeItem = {
+    test: currentTestName,
+    question: q.q,
+    answers: q.a,
+    correct: q.c,
+    your: selectedIndex,
+    subjectKey: q.subjectKey,
+    subjectName: q.subjectName
+  };
+
+  mistakes.push(mistakeItem);
+  saveMistake(mistakeItem);
+}
 
     mistakes.push(mistakeItem);
     saveMistake(mistakeItem);
@@ -237,7 +257,11 @@ function finishQuiz() {
 
   drawChart(score, wrong);
   renderMistakes();
+  showExamSubjectStats();
 }
+
+
+
 
 function drawChart(right, wrong) {
   const canvas = document.getElementById("chart");
@@ -501,16 +525,23 @@ window.startZhtsPart = startZhtsPart;
 
 
 //Кнопка экзамен на 120 вопросов 
-
-
-
-function takeRandomQuestions(array, count) {
+/*function takeRandomQuestions(array, count) {
   const copied = copyQuestions(array);
   const shuffled = shuffleQuestions(copied);
   return shuffled.slice(0, count);
 }
 
-function startExam120() {
+function addSubjectToQuestions(array, subjectKey, subjectName) {
+  return array.map(q => ({
+    ...q,
+    subjectKey: subjectKey,
+    subjectName: subjectName,
+    selected: null,
+    isCorrect: false
+  }));
+}*/
+
+/*function startExam120() {
   if (
     typeof vlsQuestions === "undefined" ||
     typeof pteQuestions === "undefined" ||
@@ -531,10 +562,29 @@ function startExam120() {
     return;
   }
 
-  const vlsPart = takeRandomQuestions(vlsQuestions, 30);
-  const ptePart = takeRandomQuestions(pteQuestions, 30);
-  const biotPart = takeRandomQuestions(biotQuestions, 30);
-  const zhtsPart = takeRandomQuestions(zhtsQuestions, 30);
+  const vlsPart = addSubjectToQuestions(
+    takeRandomQuestions(vlsQuestions, 30),
+    "vls",
+    "ВЛС"
+  );
+
+  const ptePart = addSubjectToQuestions(
+    takeRandomQuestions(pteQuestions, 30),
+    "pte",
+    "ПТЭ"
+  );
+
+  const biotPart = addSubjectToQuestions(
+    takeRandomQuestions(biotQuestions, 30),
+    "biot",
+    "Охрана труда"
+  );
+
+  const zhtsPart = addSubjectToQuestions(
+    takeRandomQuestions(zhtsQuestions, 30),
+    "zhts",
+    "ЖТС"
+  );
 
   questions = shuffleQuestions([
     ...vlsPart,
@@ -557,19 +607,145 @@ function startExam120() {
 
   startScreen.classList.add("hidden");
   resultScreen.classList.add("hidden");
-  vlsPartsScreen.classList.add("hidden");
+
+  if (typeof vlsPartsScreen !== "undefined" && vlsPartsScreen) {
+    vlsPartsScreen.classList.add("hidden");
+  }
 
   if (typeof zhtsPartsScreen !== "undefined" && zhtsPartsScreen) {
     zhtsPartsScreen.classList.add("hidden");
   }
 
+  if (typeof ptePartsScreen !== "undefined" && ptePartsScreen) {
+    ptePartsScreen.classList.add("hidden");
+  }
+
   quizScreen.classList.remove("hidden");
 
   startQuiz();
-  startExamTimer(60 * 60);
+
+  if (typeof startExamTimer === "function") {
+    startExamTimer(60 * 60);
+  }
 }
 
 window.startExam120 = startExam120;
+*/
+
+
+
+
+function takeRandomQuestions(array, count) {
+  const copied = copyQuestions(array);
+  const shuffled = shuffleQuestions(copied);
+  return shuffled.slice(0, count);
+}
+
+function addSubjectToQuestions(array, subjectKey, subjectName) {
+  return array.map(q => ({
+    ...q,
+    subjectKey: subjectKey,
+    subjectName: subjectName,
+    selected: null,
+    isCorrect: false
+  }));
+}
+
+function startExam120() {
+  if (
+    typeof vlsQuestions === "undefined" ||
+    typeof pteQuestions === "undefined" ||
+    typeof biotQuestions === "undefined" ||
+    typeof zhtsQuestions === "undefined"
+  ) {
+    alert("Не найдены массивы вопросов. Проверь script.js");
+    return;
+  }
+
+  const vlsPart = addSubjectToQuestions(
+    takeRandomQuestions(vlsQuestions, 30),
+    "vls",
+    "ВЛС"
+  );
+
+  const ptePart = addSubjectToQuestions(
+    takeRandomQuestions(pteQuestions, 30),
+    "pte",
+    "ПТЭ"
+  );
+
+  const biotPart = addSubjectToQuestions(
+    takeRandomQuestions(biotQuestions, 30),
+    "biot",
+    "Охрана труда"
+  );
+
+  const zhtsPart = addSubjectToQuestions(
+    takeRandomQuestions(zhtsQuestions, 30),
+    "zhts",
+    "ЖТС"
+  );
+
+  questions = shuffleQuestions([
+    ...vlsPart,
+    ...ptePart,
+    ...biotPart,
+    ...zhtsPart
+  ]);
+
+  originalQuestions = copyQuestions(questions);
+
+  isMistakesMode = false;
+  isFinalExam = true;
+  currentTestKey = "exam";
+  currentTestName = "Экзамен 120 вопросов";
+
+  mistakes = [];
+  score = 0;
+  currentIndex = 0;
+  selectedAnswer = null;
+
+  startScreen.classList.add("hidden");
+  resultScreen.classList.add("hidden");
+
+  if (typeof vlsPartsScreen !== "undefined" && vlsPartsScreen) {
+    vlsPartsScreen.classList.add("hidden");
+  }
+
+  if (typeof zhtsPartsScreen !== "undefined" && zhtsPartsScreen) {
+    zhtsPartsScreen.classList.add("hidden");
+  }
+
+  if (typeof ptePartsScreen !== "undefined" && ptePartsScreen) {
+    ptePartsScreen.classList.add("hidden");
+  }
+
+  quizScreen.classList.remove("hidden");
+
+  startQuiz();
+
+  if (typeof startExamTimer === "function") {
+    startExamTimer(60 * 60);
+  }
+}
+
+window.startExam120 = startExam120;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -672,5 +848,97 @@ function startPtePart(start, end, title) {
 
 window.openPtePartsMenu = openPtePartsMenu;
 window.startPtePart = startPtePart;
+
+
+
+
+
+
+
+
+
+
+
+
+
+function showExamSubjectStats() {
+  const oldBox = document.getElementById("examSubjectStats");
+
+  if (oldBox) {
+    oldBox.remove();
+  }
+
+  if (!isFinalExam) {
+    return;
+  }
+
+  const stats = {
+    vls: { name: "ВЛС", correct: 0, total: 0 },
+    pte: { name: "ПТЭ", correct: 0, total: 0 },
+    biot: { name: "Охрана труда", correct: 0, total: 0 },
+    zhts: { name: "ЖТС", correct: 0, total: 0 }
+  };
+
+  questions.forEach(q => {
+    if (!q.subjectKey || !stats[q.subjectKey]) {
+      return;
+    }
+
+    stats[q.subjectKey].total++;
+
+    if (q.isCorrect) {
+      stats[q.subjectKey].correct++;
+    }
+  });
+
+  const passedAll = Object.values(stats).every(item => item.correct >= 18);
+
+  const box = document.createElement("div");
+  box.id = "examSubjectStats";
+  box.className = "exam-subject-stats";
+
+  box.innerHTML = `
+    <h2>🎓 Результат по предметам</h2>
+
+    <div class="subject-row">
+      <span>📡 ${stats.vls.name}</span>
+      <b>${stats.vls.correct} / ${stats.vls.total}</b>
+      <small>${stats.vls.correct >= 18 ? "✅ сдал" : "❌ не сдал"}</small>
+    </div>
+
+    <div class="subject-row">
+      <span>📘 ${stats.pte.name}</span>
+      <b>${stats.pte.correct} / ${stats.pte.total}</b>
+      <small>${stats.pte.correct >= 18 ? "✅ сдал" : "❌ не сдал"}</small>
+    </div>
+
+    <div class="subject-row">
+      <span>🦺 ${stats.biot.name}</span>
+      <b>${stats.biot.correct} / ${stats.biot.total}</b>
+      <small>${stats.biot.correct >= 18 ? "✅ сдал" : "❌ не сдал"}</small>
+    </div>
+
+    <div class="subject-row">
+      <span>🚆 ${stats.zhts.name}</span>
+      <b>${stats.zhts.correct} / ${stats.zhts.total}</b>
+      <small>${stats.zhts.correct >= 18 ? "✅ сдал" : "❌ не сдал"}</small>
+    </div>
+
+    <div class="${passedAll ? "exam-pass" : "exam-fail"}">
+      ${
+        passedAll
+          ? "🔥 Да, ты чертов гений!"
+          : "📚 Пока не сдал. Нужно минимум 18 правильных по каждому предмету."
+      }
+    </div>
+  `;
+
+  resultScreen.appendChild(box);
+}
+
+
+
+
+
 
 
