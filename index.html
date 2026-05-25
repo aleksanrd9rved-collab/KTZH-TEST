@@ -607,6 +607,19 @@
   background: linear-gradient(135deg, #dc2626, #991b1b);
   color: white;
 }
+
+
+
+
+
+
+    .biot-parts {
+  background: linear-gradient(
+    135deg,
+    rgba(249, 115, 22, 0.95),
+    rgba(220, 38, 38, 0.86)
+  );
+}
   </style>
 </head>
 
@@ -665,6 +678,16 @@
           </div>
           <div class="icon">›</div>
         </button>
+
+<button class="section-btn biot-parts" onclick="openBiotPartsMenu()">
+  <div>
+    <div class="name">📚 Охрана труда по частям</div>
+    <div class="count">1–30 • 31–60 • 61–90 • 91–120 • 121–150</div>
+  </div>
+  <div class="icon">›</div>
+</button>
+
+        
 
         <button class="section-btn pte" onclick="chooseTest('pte')">
           <div>
@@ -894,6 +917,75 @@
 
 
 
+
+
+
+
+
+<section id="biotPartsScreen" class="screen card hidden">
+  <h1 class="hero-title">📚 Охрана труда по частям</h1>
+  <p class="hero-text">
+    Выбери блок вопросов. Так удобнее учить охрану труда по 30 вопросов.
+  </p>
+
+  <div class="section-grid">
+    <button class="section-btn biot" onclick="startBiotPart(0, 30, 'Охрана труда 1–30')">
+      <div>
+        <div class="name">🦺 ОТ 1–30</div>
+        <div class="count">Первый блок вопросов</div>
+      </div>
+      <div class="icon">›</div>
+    </button>
+
+    <button class="section-btn biot" onclick="startBiotPart(30, 60, 'Охрана труда 31–60')">
+      <div>
+        <div class="name">🦺 ОТ 31–60</div>
+        <div class="count">Второй блок вопросов</div>
+      </div>
+      <div class="icon">›</div>
+    </button>
+
+    <button class="section-btn biot" onclick="startBiotPart(60, 90, 'Охрана труда 61–90')">
+      <div>
+        <div class="name">🦺 ОТ 61–90</div>
+        <div class="count">Третий блок вопросов</div>
+      </div>
+      <div class="icon">›</div>
+    </button>
+
+    <button class="section-btn biot" onclick="startBiotPart(90, 120, 'Охрана труда 91–120')">
+      <div>
+        <div class="name">🦺 ОТ 91–120</div>
+        <div class="count">Четвёртый блок вопросов</div>
+      </div>
+      <div class="icon">›</div>
+    </button>
+
+    <button class="section-btn biot" onclick="startBiotPart(120, 150, 'Охрана труда 121–150')">
+      <div>
+        <div class="name">🦺 ОТ 121–150</div>
+        <div class="count">Пятый блок вопросов</div>
+      </div>
+      <div class="icon">›</div>
+    </button>
+
+    <button class="section-btn exam" onclick="startBiotPart(0, 150, 'Охрана труда все 150')">
+      <div>
+        <div class="name">🔥 ОТ все 150</div>
+        <div class="count">Полная проверка по охране труда</div>
+      </div>
+      <div class="icon">›</div>
+    </button>
+  </div>
+
+  <div class="small-actions">
+    <button class="btn secondary" onclick="goHome()">⬅ Назад в меню</button>
+  </div>
+</section>
+
+
+
+    
 
 
 
